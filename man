@@ -1,0 +1,1 @@
+sudo ip6tables -I INPUT -p tcp --dport 2025 -j ACCEPT //wylaczenie firewall na porcie 2025
