@@ -1,0 +1,4 @@
+/home/bartek/PS2025/projekt/build/CMakeFiles/TIG_srv.dir
+/home/bartek/PS2025/projekt/build/CMakeFiles/TIG_cli.dir
+/home/bartek/PS2025/projekt/build/CMakeFiles/edit_cache.dir
+/home/bartek/PS2025/projekt/build/CMakeFiles/rebuild_cache.dir
