@@ -190,6 +190,30 @@ src/TIG_srv.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/TIG_srv.dir/build.make CMakeFiles/TIG_srv.dir/src/TIG_srv.c.s
 .PHONY : src/TIG_srv.c.s
 
+src/daemon.o: src/daemon.c.o
+.PHONY : src/daemon.o
+
+# target to build an object file
+src/daemon.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TIG_srv.dir/build.make CMakeFiles/TIG_srv.dir/src/daemon.c.o
+.PHONY : src/daemon.c.o
+
+src/daemon.i: src/daemon.c.i
+.PHONY : src/daemon.i
+
+# target to preprocess a source file
+src/daemon.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TIG_srv.dir/build.make CMakeFiles/TIG_srv.dir/src/daemon.c.i
+.PHONY : src/daemon.c.i
+
+src/daemon.s: src/daemon.c.s
+.PHONY : src/daemon.s
+
+# target to generate assembly for a file
+src/daemon.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TIG_srv.dir/build.make CMakeFiles/TIG_srv.dir/src/daemon.c.s
+.PHONY : src/daemon.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -206,6 +230,9 @@ help:
 	@echo "... src/TIG_srv.o"
 	@echo "... src/TIG_srv.i"
 	@echo "... src/TIG_srv.s"
+	@echo "... src/daemon.o"
+	@echo "... src/daemon.i"
+	@echo "... src/daemon.s"
 .PHONY : help
 
 

@@ -39,7 +39,7 @@ void run(void) {
 
     if((listenfd = socket(AF_INET6, SOCK_STREAM, 0)) < 0){
         syslog(LOG_ERR, "socket() error: %s", strerror(errno));
-        return -1;
+        exit(1);
     }
 
     servaddr.sin6_family = AF_INET6;
@@ -48,12 +48,12 @@ void run(void) {
 
     if(bind(listenfd, (struct sockaddr*) &servaddr, sizeof(servaddr)) < 0){
         syslog(LOG_ERR, "socket() error: %s", strerror(errno));
-        return -1;
+        exit(1);
     }
 
     if(listen(listenfd, LISTENQ) < 0){
         syslog(LOG_ERR, "socket() error: %s", strerror(errno));
-        return -1;
+        exit(1);
     }
 
     while(1){

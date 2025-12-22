@@ -1,6 +1,8 @@
 file(REMOVE_RECURSE
   "CMakeFiles/TIG_srv.dir/src/TIG_srv.c.o"
   "CMakeFiles/TIG_srv.dir/src/TIG_srv.c.o.d"
+  "CMakeFiles/TIG_srv.dir/src/daemon.c.o"
+  "CMakeFiles/TIG_srv.dir/src/daemon.c.o.d"
   "TIG_srv"
   "TIG_srv.pdb"
 )

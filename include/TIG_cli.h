@@ -2,8 +2,9 @@
 #define TIG_CLI_H
 
 #define BUFF_SIZE 1024
-#define LISTEN_PORT_FTP 21
+#define LISTEN_PORT_FTP 2025
+#define SERVER_NAME "TIG_srv"
 
-int connect_and_read(const char *server_addr);
+int connection(void);
 
 #endif // TIG_CLI_H

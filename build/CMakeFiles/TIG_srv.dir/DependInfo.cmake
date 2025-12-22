@@ -9,6 +9,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/bartek/PS2025/projekt/src/TIG_srv.c" "CMakeFiles/TIG_srv.dir/src/TIG_srv.c.o" "gcc" "CMakeFiles/TIG_srv.dir/src/TIG_srv.c.o.d"
+  "/home/bartek/PS2025/projekt/src/daemon.c" "CMakeFiles/TIG_srv.dir/src/daemon.c.o" "gcc" "CMakeFiles/TIG_srv.dir/src/daemon.c.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

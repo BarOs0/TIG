@@ -4,7 +4,7 @@
 #include <netinet/in.h>
 
 #define LISTENQ 2
-#define LISTEN_PORT_FTP 21
+#define LISTEN_PORT_FTP 2025
 #define BUFF_SIZE 1024
 
 void run(void);

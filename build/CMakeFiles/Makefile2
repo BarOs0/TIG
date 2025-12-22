@@ -83,12 +83,12 @@ clean: CMakeFiles/TIG_cli.dir/clean
 CMakeFiles/TIG_srv.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/TIG_srv.dir/build.make CMakeFiles/TIG_srv.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/TIG_srv.dir/build.make CMakeFiles/TIG_srv.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/bartek/PS2025/projekt/build/CMakeFiles --progress-num=3,4 "Built target TIG_srv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/bartek/PS2025/projekt/build/CMakeFiles --progress-num=3,4,5 "Built target TIG_srv"
 .PHONY : CMakeFiles/TIG_srv.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/TIG_srv.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/bartek/PS2025/projekt/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/bartek/PS2025/projekt/build/CMakeFiles 3
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/TIG_srv.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/bartek/PS2025/projekt/build/CMakeFiles 0
 .PHONY : CMakeFiles/TIG_srv.dir/rule
