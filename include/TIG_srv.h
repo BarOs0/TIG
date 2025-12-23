@@ -5,7 +5,6 @@
 
 #define LISTENQ 2
 #define LISTEN_PORT_FTP 2025
-#define BUFF_SIZE 1024
 
 void run(void);
 void handle_client(int connfd, struct sockaddr_in6 *cliaddr);

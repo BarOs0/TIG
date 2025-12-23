@@ -16,17 +16,7 @@
 #include <syslog.h>
 
 void handle_client(int connfd, struct sockaddr_in6 *cliaddr) {
-    char peer_addr[INET6_ADDRSTRLEN+1];
-    char buff[BUFF_SIZE];
-    time_t ticks = time(NULL);
 
-    inet_ntop(AF_INET6, (void*)&cliaddr->sin6_addr, peer_addr, sizeof(peer_addr));
-    syslog(LOG_INFO, "Connection from: %s", peer_addr);
-
-    snprintf(buff, BUFF_SIZE, "%.24s\r\n", ctime(&ticks));
-    if(write(connfd, buff, strlen(buff)) < 0){
-        syslog(LOG_ERR, "socket() error: %s", strerror(errno));
-    }
 }
 
 void run(void) {

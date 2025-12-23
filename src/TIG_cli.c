@@ -8,9 +8,8 @@
 #include <string.h>
 #include <unistd.h>
 
-int connection() {
+int connection(const char* opt) {
     int n = 0, sockfd = 0;
-    char buff[BUFF_SIZE];
     struct addrinfo hints, *res, *rp;
     int err;
     const char *server_name = SERVER_NAME;
@@ -44,20 +43,11 @@ int connection() {
         return -1;
     }
 
-    while ((n = read(sockfd, buff, BUFF_SIZE-1)) > 0) {
-        buff[n] = 0;
-        if (fputs(buff, stdout) == EOF) {
-            fprintf(stderr, "fputs() error: %s\n", strerror(errno));
-            freeaddrinfo(res);
-            close(sockfd);
-            return -1;
-        }
-    }
+    switch(opt)
 
-    if (n < 0)
-        fprintf(stderr, "read error : %s\n", strerror(errno));
 
-    fflush(stdout);
+    //todo
+
     fprintf(stderr, "\nOK\n");
     freeaddrinfo(res);
     close(sockfd);
@@ -66,5 +56,8 @@ int connection() {
 }
 
 int main(int argc, char **argv){
-    return connection();
+    if(argc != 2){
+        fprintf(stderr, "ERROR: usage: ./TIG_cli <push/pull/repos> \n");
+    }
+    return connection(argv[1]);
 }
