@@ -1,8 +1,13 @@
 #ifndef TIG_CLI_H
 #define TIG_CLI_H
 
-#define LISTEN_PORT_FTP 2025
+#include <limits.h>
+
+#define LISTEN_PORT 2025
 #define SERVER_NAME "TIG_srv"
+#define COMMIT_BUFF_SIZE 64
+#define REPOS_BUFF_SIZE 1024
+#define NAME_BUFF_SIZE 32
 
 int connection(void);
 

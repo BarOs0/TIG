@@ -1,4 +1,6 @@
 #include "TIG_cli.h"
+#include "recv_directory.h"
+#include "send_directory.h"
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netdb.h>
@@ -8,18 +10,22 @@
 #include <string.h>
 #include <unistd.h>
 
-int connection(const char* opt) {
+int connection(const char* opt, const char* repo_name, const char* commit) {
     int n = 0, sockfd = 0;
     struct addrinfo hints, *res, *rp;
     int err;
     const char *server_name = SERVER_NAME;
+    char cmd;
+    char commit_buff[COMMIT_BUFF_SIZE] = {0};
+    char repos_buff[REPOS_BUFF_SIZE] = {0};
+    char name_buff[NAME_BUFF_SIZE] = {0};
 
     memset(&hints, 0, sizeof(hints));
     hints.ai_family = AF_INET6;
     hints.ai_socktype = SOCK_STREAM;
 
     char portstr[16];
-    snprintf(portstr, sizeof(portstr), "%d", LISTEN_PORT_FTP);
+    snprintf(portstr, sizeof(portstr), "%d", LISTEN_PORT);
 
     if ((err = getaddrinfo(server_name, portstr, &hints, &res)) != 0) {
         fprintf(stderr, "getaddrinfo() error for: %s\n", gai_strerror(err));
@@ -43,10 +49,75 @@ int connection(const char* opt) {
         return -1;
     }
 
-    switch(opt)
+    char cwd[PATH_MAX];
+    if(getcwd(cwd, PATH_MAX) == NULL){
+        fprintf(stderr, "getcwd() error: %s\n", strerror(errno));
+        return -1;
+    }
 
-
-    //todo
+    if(repo_name == NULL){
+        if(strcmp(opt, "repos") == 0){
+            cmd = 'R';
+            if(write(sockfd, &cmd, 1) < 0){
+                fprintf(stderr, "repos write() error: %s\n", strerror(errno));
+                return -1;
+            }
+            recv_directory(sockfd, cwd);
+        }
+    }
+    else{
+        if(strcmp(opt, "commit") == 0){
+            cmd = 'C';
+            if(write(sockfd, &cmd, 1) < 0){
+                fprintf(stderr, "commit write() error: %s\n", strerror(errno));
+                return -1;
+            }
+            strcpy(name_buff, repo_name);
+            if(write(sockfd, name_buff, NAME_BUFF_SIZE) < 0){
+                fprintf(stderr, "name in commit write() error: %s\n", strerror(errno));
+                return -1;
+            }
+            if(strlen(commit) >= COMMIT_BUFF_SIZE){
+                fprintf(stderr, "Commit message is too long\n");
+                return -1;
+            }
+            strcpy(commit_buff, commit);
+            if(write(sockfd, commit_buff, COMMIT_BUFF_SIZE) < 0){
+                fprintf(stderr, "commit message write() error: %s\n", strerror(errno));
+                return -1;
+            }
+        }
+        else if(strcmp(opt, "pull") == 0){
+            cmd = 'U';
+            if(write(sockfd, &cmd, 1) < 0){
+                fprintf(stderr, "pull write() error: %s\n", strerror(errno));
+                return -1;
+            }
+            strcpy(name_buff, repo_name);
+            if(write(sockfd, name_buff, NAME_BUFF_SIZE) < 0){
+                fprintf(stderr, "name in pull write() error: %s\n", strerror(errno));
+                return -1;
+            }
+            recv_directory(sockfd, cwd);
+        }
+        else if(strcmp(opt, "push") == 0){
+            cmd = 'P';
+            if(write(sockfd, &cmd, 1) < 0){
+                fprintf(stderr, "push write() error: %s\n", strerror(errno));
+                return -1;
+            }
+            if(strlen(repo_name) >= NAME_BUFF_SIZE){
+                fprintf(stderr, "Repo name is too long\n");
+                return -1;
+            }
+            strcpy(name_buff, repo_name);
+            if(write(sockfd, name_buff, NAME_BUFF_SIZE) < 0){
+                fprintf(stderr, "name in push write() error: %s\n", strerror(errno));
+                return -1;
+            }
+            send_directory(sockfd, cwd);
+        }
+    }
 
     fprintf(stderr, "\nOK\n");
     freeaddrinfo(res);
@@ -56,8 +127,18 @@ int connection(const char* opt) {
 }
 
 int main(int argc, char **argv){
-    if(argc != 2){
-        fprintf(stderr, "ERROR: usage: ./TIG_cli <push/pull/repos> \n");
+    if((argc == 2) && (strcmp(argv[1], "repos") == 0)){
+        return connection(argv[1], NULL, NULL);
     }
-    return connection(argv[1]);
+    else if(argc == 3 && (strcmp(argv[1], "pull") == 0 || strcmp(argv[1], "push") == 0)){
+        return connection(argv[1], argv[2], NULL);
+    }
+    else if(argc == 4 && (strcmp(argv[1], "commit") == 0)){
+        return connection(argv[1], argv[2], argv[3]);
+    }
+    else{
+        fprintf(stderr, "ERROR: usage: ./TIG_cli <push/repos> or ./TIG_cli <commit> <repo name> <message> or ./TIG_cli <pull> <repo name>\n");
+    }
+    
+    return 0;
 }

@@ -6,11 +6,24 @@ set(CMAKE_C_STANDARD 99)
 
 include_directories(${CMAKE_SOURCE_DIR}/include)
 
-add_executable(TIG_srv
-    src/TIG_srv.c
+add_library(tig_helpers STATIC
+    src/recv_file.c
+    src/recv_directory.c
+    src/send_file.c
+    src/send_directory.c
+)
+
+add_library(tig_srv_daemon STATIC
     src/daemon.c
 )
+
+add_executable(TIG_srv
+    src/TIG_srv.c
+)
+target_link_libraries(TIG_srv tig_helpers)
+target_link_libraries(TIG_srv tig_srv_daemon)
 
 add_executable(TIG_cli
     src/TIG_cli.c
 )
+target_link_libraries(TIG_cli tig_helpers)

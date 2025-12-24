@@ -4,12 +4,38 @@
 #include <string.h>
 #include <stdio.h>
 #include <limits.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <stdint.h>
 
 void send_file(int sockfd, const char* filepath){
+
+    /*
+        ====SENDING FILE SIZE====
+    */
+
+    struct stat st; // structure with statistics of file
+    if (stat(filepath, &st) < 0){
+        perror("send_file.c stat() error");
+        return;
+    }
+
+    off_t filesize = st.st_size; // off_t - file size (bytes)
+
+    uint64_t size_to_send = (uint64_t)filesize;
+    if (write(sockfd, &size_to_send, sizeof(size_to_send)) != sizeof(size_to_send)){ // sending file size
+        perror("send_file.c write() size error");
+        return;
+    }
+
+    /*
+        ====SENDING FILE====
+    */
 
     int filefd;
 
     if((filefd = open(filepath, O_RDONLY)) < 0){ // opening a file
+        perror("send_file.c open() file error");
         return;
     }
 
@@ -25,6 +51,7 @@ void send_file(int sockfd, const char* filepath){
                 (bytes_read - total_bytes_sent) = is the number of bytes left to be sent from the current buffer
                 */
                 close(filefd);
+                perror("send_file.c write() file error");
                 return;
             }
             total_bytes_sent += bytes_sent; // increment
