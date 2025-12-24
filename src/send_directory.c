@@ -5,6 +5,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <limits.h>
+#include <unistd.h>
 
 void send_directory(int sockfd, const char* dirpath){
     DIR *dir = opendir(dirpath);

@@ -59,7 +59,7 @@ int connection(const char* opt, const char* repo_name, const char* commit) {
         if(strcmp(opt, "repos") == 0){
             cmd = 'R';
             if(write(sockfd, &cmd, 1) < 0){
-                fprintf(stderr, "repos write() error: %s\n", strerror(errno));
+                fprintf(stderr, "TIG_cli.c repos write() error: %s\n", strerror(errno));
                 return -1;
             }
             recv_directory(sockfd, cwd);
@@ -69,12 +69,12 @@ int connection(const char* opt, const char* repo_name, const char* commit) {
         if(strcmp(opt, "commit") == 0){
             cmd = 'C';
             if(write(sockfd, &cmd, 1) < 0){
-                fprintf(stderr, "commit write() error: %s\n", strerror(errno));
+                fprintf(stderr, "TIG_cli.c commit write() error: %s\n", strerror(errno));
                 return -1;
             }
             strcpy(name_buff, repo_name);
             if(write(sockfd, name_buff, NAME_BUFF_SIZE) < 0){
-                fprintf(stderr, "name in commit write() error: %s\n", strerror(errno));
+                fprintf(stderr, "TIG_cli.c commit write() error: %s\n", strerror(errno));
                 return -1;
             }
             if(strlen(commit) >= COMMIT_BUFF_SIZE){
@@ -83,19 +83,19 @@ int connection(const char* opt, const char* repo_name, const char* commit) {
             }
             strcpy(commit_buff, commit);
             if(write(sockfd, commit_buff, COMMIT_BUFF_SIZE) < 0){
-                fprintf(stderr, "commit message write() error: %s\n", strerror(errno));
+                fprintf(stderr, "TIG_cli.c commit message write() error: %s\n", strerror(errno));
                 return -1;
             }
         }
         else if(strcmp(opt, "pull") == 0){
             cmd = 'U';
             if(write(sockfd, &cmd, 1) < 0){
-                fprintf(stderr, "pull write() error: %s\n", strerror(errno));
+                fprintf(stderr, "TIG_cli.c pull write() error: %s\n", strerror(errno));
                 return -1;
             }
             strcpy(name_buff, repo_name);
             if(write(sockfd, name_buff, NAME_BUFF_SIZE) < 0){
-                fprintf(stderr, "name in pull write() error: %s\n", strerror(errno));
+                fprintf(stderr, "TIG_cli.c name in pull write() error: %s\n", strerror(errno));
                 return -1;
             }
             recv_directory(sockfd, cwd);
@@ -103,7 +103,7 @@ int connection(const char* opt, const char* repo_name, const char* commit) {
         else if(strcmp(opt, "push") == 0){
             cmd = 'P';
             if(write(sockfd, &cmd, 1) < 0){
-                fprintf(stderr, "push write() error: %s\n", strerror(errno));
+                fprintf(stderr, "TIG_cli.c push write() error: %s\n", strerror(errno));
                 return -1;
             }
             if(strlen(repo_name) >= NAME_BUFF_SIZE){
@@ -112,7 +112,7 @@ int connection(const char* opt, const char* repo_name, const char* commit) {
             }
             strcpy(name_buff, repo_name);
             if(write(sockfd, name_buff, NAME_BUFF_SIZE) < 0){
-                fprintf(stderr, "name in push write() error: %s\n", strerror(errno));
+                fprintf(stderr, "TIG_cli.c name in push write() error: %s\n", strerror(errno));
                 return -1;
             }
             send_directory(sockfd, cwd);

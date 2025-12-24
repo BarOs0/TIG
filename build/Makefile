@@ -117,6 +117,32 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named tig_helpers
+
+# Build rule for target.
+tig_helpers: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tig_helpers
+.PHONY : tig_helpers
+
+# fast build rule for target.
+tig_helpers/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tig_helpers.dir/build.make CMakeFiles/tig_helpers.dir/build
+.PHONY : tig_helpers/fast
+
+#=============================================================================
+# Target rules for targets named tig_srv_daemon
+
+# Build rule for target.
+tig_srv_daemon: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tig_srv_daemon
+.PHONY : tig_srv_daemon
+
+# fast build rule for target.
+tig_srv_daemon/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tig_srv_daemon.dir/build.make CMakeFiles/tig_srv_daemon.dir/build
+.PHONY : tig_srv_daemon/fast
+
+#=============================================================================
 # Target rules for targets named TIG_srv
 
 # Build rule for target.
@@ -195,7 +221,7 @@ src/daemon.o: src/daemon.c.o
 
 # target to build an object file
 src/daemon.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/TIG_srv.dir/build.make CMakeFiles/TIG_srv.dir/src/daemon.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tig_srv_daemon.dir/build.make CMakeFiles/tig_srv_daemon.dir/src/daemon.c.o
 .PHONY : src/daemon.c.o
 
 src/daemon.i: src/daemon.c.i
@@ -203,7 +229,7 @@ src/daemon.i: src/daemon.c.i
 
 # target to preprocess a source file
 src/daemon.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/TIG_srv.dir/build.make CMakeFiles/TIG_srv.dir/src/daemon.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tig_srv_daemon.dir/build.make CMakeFiles/tig_srv_daemon.dir/src/daemon.c.i
 .PHONY : src/daemon.c.i
 
 src/daemon.s: src/daemon.c.s
@@ -211,8 +237,104 @@ src/daemon.s: src/daemon.c.s
 
 # target to generate assembly for a file
 src/daemon.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/TIG_srv.dir/build.make CMakeFiles/TIG_srv.dir/src/daemon.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tig_srv_daemon.dir/build.make CMakeFiles/tig_srv_daemon.dir/src/daemon.c.s
 .PHONY : src/daemon.c.s
+
+src/recv_directory.o: src/recv_directory.c.o
+.PHONY : src/recv_directory.o
+
+# target to build an object file
+src/recv_directory.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tig_helpers.dir/build.make CMakeFiles/tig_helpers.dir/src/recv_directory.c.o
+.PHONY : src/recv_directory.c.o
+
+src/recv_directory.i: src/recv_directory.c.i
+.PHONY : src/recv_directory.i
+
+# target to preprocess a source file
+src/recv_directory.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tig_helpers.dir/build.make CMakeFiles/tig_helpers.dir/src/recv_directory.c.i
+.PHONY : src/recv_directory.c.i
+
+src/recv_directory.s: src/recv_directory.c.s
+.PHONY : src/recv_directory.s
+
+# target to generate assembly for a file
+src/recv_directory.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tig_helpers.dir/build.make CMakeFiles/tig_helpers.dir/src/recv_directory.c.s
+.PHONY : src/recv_directory.c.s
+
+src/recv_file.o: src/recv_file.c.o
+.PHONY : src/recv_file.o
+
+# target to build an object file
+src/recv_file.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tig_helpers.dir/build.make CMakeFiles/tig_helpers.dir/src/recv_file.c.o
+.PHONY : src/recv_file.c.o
+
+src/recv_file.i: src/recv_file.c.i
+.PHONY : src/recv_file.i
+
+# target to preprocess a source file
+src/recv_file.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tig_helpers.dir/build.make CMakeFiles/tig_helpers.dir/src/recv_file.c.i
+.PHONY : src/recv_file.c.i
+
+src/recv_file.s: src/recv_file.c.s
+.PHONY : src/recv_file.s
+
+# target to generate assembly for a file
+src/recv_file.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tig_helpers.dir/build.make CMakeFiles/tig_helpers.dir/src/recv_file.c.s
+.PHONY : src/recv_file.c.s
+
+src/send_directory.o: src/send_directory.c.o
+.PHONY : src/send_directory.o
+
+# target to build an object file
+src/send_directory.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tig_helpers.dir/build.make CMakeFiles/tig_helpers.dir/src/send_directory.c.o
+.PHONY : src/send_directory.c.o
+
+src/send_directory.i: src/send_directory.c.i
+.PHONY : src/send_directory.i
+
+# target to preprocess a source file
+src/send_directory.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tig_helpers.dir/build.make CMakeFiles/tig_helpers.dir/src/send_directory.c.i
+.PHONY : src/send_directory.c.i
+
+src/send_directory.s: src/send_directory.c.s
+.PHONY : src/send_directory.s
+
+# target to generate assembly for a file
+src/send_directory.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tig_helpers.dir/build.make CMakeFiles/tig_helpers.dir/src/send_directory.c.s
+.PHONY : src/send_directory.c.s
+
+src/send_file.o: src/send_file.c.o
+.PHONY : src/send_file.o
+
+# target to build an object file
+src/send_file.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tig_helpers.dir/build.make CMakeFiles/tig_helpers.dir/src/send_file.c.o
+.PHONY : src/send_file.c.o
+
+src/send_file.i: src/send_file.c.i
+.PHONY : src/send_file.i
+
+# target to preprocess a source file
+src/send_file.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tig_helpers.dir/build.make CMakeFiles/tig_helpers.dir/src/send_file.c.i
+.PHONY : src/send_file.c.i
+
+src/send_file.s: src/send_file.c.s
+.PHONY : src/send_file.s
+
+# target to generate assembly for a file
+src/send_file.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tig_helpers.dir/build.make CMakeFiles/tig_helpers.dir/src/send_file.c.s
+.PHONY : src/send_file.c.s
 
 # Help Target
 help:
@@ -224,6 +346,8 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... TIG_cli"
 	@echo "... TIG_srv"
+	@echo "... tig_helpers"
+	@echo "... tig_srv_daemon"
 	@echo "... src/TIG_cli.o"
 	@echo "... src/TIG_cli.i"
 	@echo "... src/TIG_cli.s"
@@ -233,6 +357,18 @@ help:
 	@echo "... src/daemon.o"
 	@echo "... src/daemon.i"
 	@echo "... src/daemon.s"
+	@echo "... src/recv_directory.o"
+	@echo "... src/recv_directory.i"
+	@echo "... src/recv_directory.s"
+	@echo "... src/recv_file.o"
+	@echo "... src/recv_file.i"
+	@echo "... src/recv_file.s"
+	@echo "... src/send_directory.o"
+	@echo "... src/send_directory.i"
+	@echo "... src/send_directory.s"
+	@echo "... src/send_file.o"
+	@echo "... src/send_file.i"
+	@echo "... src/send_file.s"
 .PHONY : help
 
 

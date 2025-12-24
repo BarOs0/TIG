@@ -4,6 +4,8 @@
 CMakeFiles/TIG_cli.dir/src/TIG_cli.c.o
  /home/bartek/PS2025/projekt/src/TIG_cli.c
  /home/bartek/PS2025/projekt/include/TIG_cli.h
+ /home/bartek/PS2025/projekt/include/recv_directory.h
+ /home/bartek/PS2025/projekt/include/send_directory.h
  /usr/include/alloca.h
  /usr/include/asm-generic/bitsperlong.h
  /usr/include/asm-generic/errno-base.h
@@ -15,7 +17,9 @@ CMakeFiles/TIG_cli.dir/src/TIG_cli.c.o
  /usr/include/errno.h
  /usr/include/features-time64.h
  /usr/include/features.h
+ /usr/include/limits.h
  /usr/include/linux/errno.h
+ /usr/include/linux/limits.h
  /usr/include/linux/posix_types.h
  /usr/include/linux/stddef.h
  /usr/include/netdb.h
@@ -46,9 +50,14 @@ CMakeFiles/TIG_cli.dir/src/TIG_cli.c.o
  /usr/include/x86_64-linux-gnu/bits/getopt_posix.h
  /usr/include/x86_64-linux-gnu/bits/in.h
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h
+ /usr/include/x86_64-linux-gnu/bits/local_lim.h
  /usr/include/x86_64-linux-gnu/bits/long-double.h
  /usr/include/x86_64-linux-gnu/bits/netdb.h
+ /usr/include/x86_64-linux-gnu/bits/posix1_lim.h
+ /usr/include/x86_64-linux-gnu/bits/posix2_lim.h
  /usr/include/x86_64-linux-gnu/bits/posix_opt.h
+ /usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h
+ /usr/include/x86_64-linux-gnu/bits/pthread_stack_min.h
  /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h
  /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h
  /usr/include/x86_64-linux-gnu/bits/select.h
@@ -96,6 +105,8 @@ CMakeFiles/TIG_cli.dir/src/TIG_cli.c.o
  /usr/include/x86_64-linux-gnu/sys/select.h
  /usr/include/x86_64-linux-gnu/sys/socket.h
  /usr/include/x86_64-linux-gnu/sys/types.h
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/limits.h
  /usr/lib/gcc/x86_64-linux-gnu/13/include/stdarg.h
  /usr/lib/gcc/x86_64-linux-gnu/13/include/stddef.h
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/syslimits.h
 

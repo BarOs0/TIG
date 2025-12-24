@@ -1,0 +1,2 @@
+/usr/bin/ar qc libtig_srv_daemon.a CMakeFiles/tig_srv_daemon.dir/src/daemon.c.o
+/usr/bin/ranlib libtig_srv_daemon.a

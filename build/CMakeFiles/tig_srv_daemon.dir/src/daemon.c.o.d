@@ -1,4 +1,4 @@
-CMakeFiles/TIG_srv.dir/src/daemon.c.o: \
+CMakeFiles/tig_srv_daemon.dir/src/daemon.c.o: \
  /home/bartek/PS2025/projekt/src/daemon.c /usr/include/stdc-predef.h \
  /home/bartek/PS2025/projekt/include/daemon.h \
  /usr/include/x86_64-linux-gnu/sys/types.h /usr/include/features.h \

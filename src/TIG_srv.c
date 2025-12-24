@@ -25,9 +25,10 @@ void handle_client(int connfd, struct sockaddr_in6 *cliaddr) {
     char repos_buff[REPOS_BUFF_SIZE] = {0};
     char path_buff[PATH_MAX] = {0};
     char name_buff[NAME_BUFF_SIZE] = {0};
+    FILE *f;
 
     if(read(connfd, &cmd, 1) < 0){
-        syslog(LOG_ERR, "read() cmd error: %s", strerror(errno));
+        syslog(LOG_ERR, "TIG_srv.c read() cmd error: %s", strerror(errno));
         exit(1);
     }
 
@@ -35,7 +36,7 @@ void handle_client(int connfd, struct sockaddr_in6 *cliaddr) {
 
         case 'U':
             if(read(connfd, name_buff, NAME_BUFF_SIZE) < 0){
-                syslog(LOG_ERR, "read() name error: %s", strerror(errno));
+                syslog(LOG_ERR, "TIG_srv.c read() name push error: %s", strerror(errno));
                 exit(1);
             }
             strcpy(path_buff, REPOS_PATH);
@@ -52,7 +53,7 @@ void handle_client(int connfd, struct sockaddr_in6 *cliaddr) {
         
         case 'P':
             if(read(connfd, name_buff, NAME_BUFF_SIZE) < 0){
-                syslog(LOG_ERR, "read() name error: %s", strerror(errno));
+                syslog(LOG_ERR, "TIG_srv.c read() name pull error: %s", strerror(errno));
                 exit(1);
             }
             strcpy(path_buff, REPOS_PATH);
@@ -67,7 +68,7 @@ void handle_client(int connfd, struct sockaddr_in6 *cliaddr) {
                 mkdir(path_buff, 0755);
             }
 
-            FILE* f = fopen(path_buff, "a+");
+            f = fopen(path_buff, "a+");
             if(f == NULL){
                 syslog(LOG_ERR, "counting repos in /srv/data/list error: %s", strerror(errno));
                 exit(1);
@@ -79,20 +80,20 @@ void handle_client(int connfd, struct sockaddr_in6 *cliaddr) {
                 i++;
             }
             fprintf(f, "%d. %s\n", i + 1, name_buff);
-            close(f);
+            fclose(f);
             break;
 
         case 'C':
             if(read(connfd, name_buff, NAME_BUFF_SIZE) < 0){
-                syslog(LOG_ERR, "read() name error: %s", strerror(errno));
+                syslog(LOG_ERR, "TIG_srv.c read() name commit error: %s", strerror(errno));
                 exit(1);
             }
 
             if(read(connfd, commit_buff, COMMIT_BUFF_SIZE) < 0){
-                syslog(LOG_ERR, "read() commit error: %s", strerror(errno));
+                syslog(LOG_ERR, "TIG_srv.c read() commit commit error: %s", strerror(errno));
                 exit(1);
             }
-            
+
             strcpy(path_buff, REPOS_PATH);
             strcat(path_buff, "/commits/");
             strcat(path_buff, name_buff);
@@ -102,7 +103,7 @@ void handle_client(int connfd, struct sockaddr_in6 *cliaddr) {
             char time_str[64];
             strftime(time_str, sizeof(time_str), "%Y-%m-%d %H:%M:%S", tm_info);
 
-            FILE *f = fopen(path_buff, "a");
+            f = fopen(path_buff, "a");
             if(f == NULL){
                 syslog(LOG_ERR, "open commit file error: %s", strerror(errno));
                 exit(1);

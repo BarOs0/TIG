@@ -9,6 +9,6 @@
 #define REPOS_BUFF_SIZE 1024
 #define NAME_BUFF_SIZE 32
 
-int connection(void);
+int connection(const char* opt, const char* repo_name, const char* commit);
 
 #endif // TIG_CLI_H
