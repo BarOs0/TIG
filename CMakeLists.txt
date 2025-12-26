@@ -16,6 +16,7 @@ add_library(tig_helpers STATIC
 
 add_library(tig_srv_helpers STATIC
     src/daemon.c
+    src/copy_directory.c
 )
 
 add_library(tig_cli_helpers STATIC

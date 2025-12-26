@@ -1,1 +1,0 @@
-/usr/bin/cc CMakeFiles/TIG_cli.dir/src/TIG_cli.c.o -o TIG_cli  libtig_helpers.a libtig_cli_helpers.a 

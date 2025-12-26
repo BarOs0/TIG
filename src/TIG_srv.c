@@ -4,6 +4,7 @@
 #include "send_directory.h"
 #include "send_file.h"
 #include "get_time.h"
+#include "copy_directory.h"
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/stat.h>
@@ -24,6 +25,7 @@ void handle_client(int connfd, struct sockaddr_in6 *cliaddr) {
     char commit_buff[COMMIT_BUFF_SIZE] = {0};
     char repos_buff[REPOS_BUFF_SIZE] = {0};
     char path_buff[PATH_MAX] = {0};
+    char path_buff_2[PATH_MAX] = {0};
     char name_buff[NAME_BUFF_SIZE] = {0};
     char time_str[TIME_BUFF_SIZE] = {0};
     FILE *f;
@@ -51,7 +53,7 @@ void handle_client(int connfd, struct sockaddr_in6 *cliaddr) {
 
     switch(cmd){
 
-        case 'U':
+        case 'U': //pull
             if(read(connfd, name_buff, NAME_BUFF_SIZE) < 0){
                 syslog(LOG_ERR, "TIG_srv.c read() name pull error: %s", strerror(errno));
                 return;
@@ -72,11 +74,22 @@ void handle_client(int connfd, struct sockaddr_in6 *cliaddr) {
             send_file(connfd, path_buff);
             break;
         
-        case 'P':
+        case 'P': //push
+
             if(read(connfd, name_buff, NAME_BUFF_SIZE) < 0){
                 syslog(LOG_ERR, "TIG_srv.c read() name push error: %s", strerror(errno));
                 return;
             }
+
+            strcpy(path_buff, REPOS_PATH);
+            strcat(path_buff, "/repos/");
+            strcat(path_buff, name_buff);
+
+            strcpy(path_buff_2, REPOS_PATH);
+            strcat(path_buff_2, "/backups/");
+            strcat(path_buff_2, name_buff);
+
+            copy_directory(path_buff, path_buff_2);
 
             syslog(LOG_INFO, "%s: HOST: %s, %s: %s\n", time_str, peeraddr_str, "pushed", name_buff);
 

@@ -1,2 +1,0 @@
-/usr/bin/ar qc libtig_cli_helpers.a CMakeFiles/tig_cli_helpers.dir/src/print_file.c.o
-/usr/bin/ranlib libtig_cli_helpers.a
