@@ -3,11 +3,10 @@
 #include "recv_directory.h"
 #include "send_directory.h"
 #include "send_file.h"
+#include "get_time.h"
 #include <sys/types.h>
 #include <sys/socket.h>
-#include <sys/time.h>
 #include <sys/stat.h>
-#include <time.h>
 #include <arpa/inet.h>
 #include <errno.h>
 #include <fcntl.h>
@@ -26,6 +25,7 @@ void handle_client(int connfd, struct sockaddr_in6 *cliaddr) {
     char repos_buff[REPOS_BUFF_SIZE] = {0};
     char path_buff[PATH_MAX] = {0};
     char name_buff[NAME_BUFF_SIZE] = {0};
+    char time_str[TIME_BUFF_SIZE] = {0};
     FILE *f;
 
     if(read(connfd, &cmd, 1) < 0){
@@ -36,6 +36,8 @@ void handle_client(int connfd, struct sockaddr_in6 *cliaddr) {
     switch(cmd){
 
         case 'U':
+            get_time(time_str);
+            syslog(LOG_INFO, "%s: %s\n", time_str, " TODO ");
             if(read(connfd, name_buff, NAME_BUFF_SIZE) < 0){
                 syslog(LOG_ERR, "TIG_srv.c read() name push error: %s", strerror(errno));
                 return;
@@ -66,7 +68,12 @@ void handle_client(int connfd, struct sockaddr_in6 *cliaddr) {
             strcpy(path_buff, REPOS_PATH);
             strcat(path_buff, "/list");
             if(stat(path_buff, &st) == -1){
-                mkdir(path_buff, 0755);
+                FILE* touch = fopen(path_buff, "a");
+                if(touch == NULL){
+                    syslog(LOG_ERR, "cannot create /srv/data/list: %s", strerror(errno));
+                    return;
+                }
+                fclose(touch);
             }
 
             f = fopen(path_buff, "a+");
@@ -78,6 +85,7 @@ void handle_client(int connfd, struct sockaddr_in6 *cliaddr) {
             char line[256];
             rewind(f);
             while(fgets(line, sizeof(line), f)){
+                if(line[0] == '\n' || line[0] == '\0') continue;
                 i++;
             }
             fprintf(f, "%d. %s\n", i + 1, name_buff);
@@ -99,10 +107,7 @@ void handle_client(int connfd, struct sockaddr_in6 *cliaddr) {
             strcat(path_buff, "/commits/");
             strcat(path_buff, name_buff);
 
-            time_t now = time(NULL);
-            struct tm *tm_info = localtime(&now);
-            char time_str[64];
-            strftime(time_str, sizeof(time_str), "%Y-%m-%d %H:%M:%S", tm_info);
+            get_time(time_str);
 
             f = fopen(path_buff, "a");
             if(f == NULL){
@@ -154,8 +159,11 @@ void run(void) {
 }
 
 int main(int argc, char** argv){
+    char time_str[TIME_BUFF_SIZE] = {0};
     daemon_init("TIG_srv", LOG_DAEMON, getuid());
     openlog("TIG_srv", LOG_PID, LOG_DAEMON);
     run();
+    get_time(time_str);
+    syslog(LOG_INFO, "%s: %s\n", time_str, "System ready, waiting for clients...");
     return 0;
 }

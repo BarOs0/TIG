@@ -11,6 +11,7 @@ add_library(tig_helpers STATIC
     src/recv_directory.c
     src/send_file.c
     src/send_directory.c
+    src/get_time.c
 )
 
 add_library(tig_srv_helpers STATIC

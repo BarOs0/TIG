@@ -14,7 +14,7 @@ void clear_dir(const char* dirpath){
     char filepath[PATH_MAX];
 
     while((entry = readdir(dir)) != NULL){
-        if(strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0){
+        if(strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0 || strcmp(entry->d_name, "TIG_cli") == 0){
             continue;
         }
         snprintf(filepath, PATH_MAX, "%s/%s", dirpath, entry->d_name);

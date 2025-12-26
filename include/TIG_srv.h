@@ -8,6 +8,7 @@
 #define COMMIT_BUFF_SIZE 64
 #define REPOS_BUFF_SIZE 1024
 #define NAME_BUFF_SIZE 32
+#define TIME_BUFF_SIZE 64
 #define REPOS_PATH "/home/bartek/PS2025/projekt/srv/data"
 
 void run(void);
