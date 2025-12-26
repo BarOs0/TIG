@@ -3,6 +3,7 @@
 
 CMakeFiles/TIG_cli.dir/src/TIG_cli.c.o: /home/bartek/PS2025/projekt/src/TIG_cli.c \
   /home/bartek/PS2025/projekt/include/TIG_cli.h \
+  /home/bartek/PS2025/projekt/include/print_file.h \
   /home/bartek/PS2025/projekt/include/recv_directory.h \
   /home/bartek/PS2025/projekt/include/send_directory.h \
   /usr/include/alloca.h \
@@ -168,7 +169,7 @@ CMakeFiles/TIG_cli.dir/src/TIG_cli.c.o: /home/bartek/PS2025/projekt/src/TIG_cli.
 
 /usr/include/x86_64-linux-gnu/bits/socket.h:
 
-/usr/include/unistd.h:
+/usr/include/x86_64-linux-gnu/bits/select.h:
 
 /usr/include/strings.h:
 
@@ -202,6 +203,12 @@ CMakeFiles/TIG_cli.dir/src/TIG_cli.c.o: /home/bartek/PS2025/projekt/src/TIG_cli.
 
 /usr/include/x86_64-linux-gnu/bits/posix2_lim.h:
 
+/usr/include/linux/stddef.h:
+
+/usr/include/errno.h:
+
+/usr/include/netdb.h:
+
 /home/bartek/PS2025/projekt/src/TIG_cli.c:
 
 /usr/include/features.h:
@@ -218,10 +225,6 @@ CMakeFiles/TIG_cli.dir/src/TIG_cli.c.o: /home/bartek/PS2025/projekt/src/TIG_cli.
 
 /usr/include/x86_64-linux-gnu/bits/local_lim.h:
 
-/usr/include/netdb.h:
-
-/usr/include/errno.h:
-
 /usr/include/x86_64-linux-gnu/gnu/stubs.h:
 
 /usr/include/asm-generic/bitsperlong.h:
@@ -234,7 +237,7 @@ CMakeFiles/TIG_cli.dir/src/TIG_cli.c.o: /home/bartek/PS2025/projekt/src/TIG_cli.
 
 /usr/include/x86_64-linux-gnu/bits/endianness.h:
 
-/usr/include/linux/stddef.h:
+/usr/include/unistd.h:
 
 /usr/include/x86_64-linux-gnu/bits/sockaddr.h:
 
@@ -247,6 +250,8 @@ CMakeFiles/TIG_cli.dir/src/TIG_cli.c.o: /home/bartek/PS2025/projekt/src/TIG_cli.
 /usr/include/string.h:
 
 /usr/include/x86_64-linux-gnu/bits/endian.h:
+
+/home/bartek/PS2025/projekt/include/print_file.h:
 
 /usr/include/x86_64-linux-gnu/asm/posix_types.h:
 
@@ -315,8 +320,6 @@ CMakeFiles/TIG_cli.dir/src/TIG_cli.c.o: /home/bartek/PS2025/projekt/src/TIG_cli.
 /usr/include/x86_64-linux-gnu/bits/types/__fpos64_t.h:
 
 /usr/include/x86_64-linux-gnu/bits/pthread_stack_min.h:
-
-/usr/include/x86_64-linux-gnu/bits/select.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/time_t.h:
 

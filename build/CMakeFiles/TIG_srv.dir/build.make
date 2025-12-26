@@ -93,7 +93,7 @@ TIG_srv_EXTERNAL_OBJECTS =
 TIG_srv: CMakeFiles/TIG_srv.dir/src/TIG_srv.c.o
 TIG_srv: CMakeFiles/TIG_srv.dir/build.make
 TIG_srv: libtig_helpers.a
-TIG_srv: libtig_srv_daemon.a
+TIG_srv: libtig_srv_helpers.a
 TIG_srv: CMakeFiles/TIG_srv.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/bartek/PS2025/projekt/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking C executable TIG_srv"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/TIG_srv.dir/link.txt --verbose=$(VERBOSE)

@@ -130,17 +130,30 @@ tig_helpers/fast:
 .PHONY : tig_helpers/fast
 
 #=============================================================================
-# Target rules for targets named tig_srv_daemon
+# Target rules for targets named tig_srv_helpers
 
 # Build rule for target.
-tig_srv_daemon: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tig_srv_daemon
-.PHONY : tig_srv_daemon
+tig_srv_helpers: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tig_srv_helpers
+.PHONY : tig_srv_helpers
 
 # fast build rule for target.
-tig_srv_daemon/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tig_srv_daemon.dir/build.make CMakeFiles/tig_srv_daemon.dir/build
-.PHONY : tig_srv_daemon/fast
+tig_srv_helpers/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tig_srv_helpers.dir/build.make CMakeFiles/tig_srv_helpers.dir/build
+.PHONY : tig_srv_helpers/fast
+
+#=============================================================================
+# Target rules for targets named tig_cli_helpers
+
+# Build rule for target.
+tig_cli_helpers: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tig_cli_helpers
+.PHONY : tig_cli_helpers
+
+# fast build rule for target.
+tig_cli_helpers/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tig_cli_helpers.dir/build.make CMakeFiles/tig_cli_helpers.dir/build
+.PHONY : tig_cli_helpers/fast
 
 #=============================================================================
 # Target rules for targets named TIG_srv
@@ -221,7 +234,7 @@ src/daemon.o: src/daemon.c.o
 
 # target to build an object file
 src/daemon.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tig_srv_daemon.dir/build.make CMakeFiles/tig_srv_daemon.dir/src/daemon.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tig_srv_helpers.dir/build.make CMakeFiles/tig_srv_helpers.dir/src/daemon.c.o
 .PHONY : src/daemon.c.o
 
 src/daemon.i: src/daemon.c.i
@@ -229,7 +242,7 @@ src/daemon.i: src/daemon.c.i
 
 # target to preprocess a source file
 src/daemon.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tig_srv_daemon.dir/build.make CMakeFiles/tig_srv_daemon.dir/src/daemon.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tig_srv_helpers.dir/build.make CMakeFiles/tig_srv_helpers.dir/src/daemon.c.i
 .PHONY : src/daemon.c.i
 
 src/daemon.s: src/daemon.c.s
@@ -237,8 +250,32 @@ src/daemon.s: src/daemon.c.s
 
 # target to generate assembly for a file
 src/daemon.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tig_srv_daemon.dir/build.make CMakeFiles/tig_srv_daemon.dir/src/daemon.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tig_srv_helpers.dir/build.make CMakeFiles/tig_srv_helpers.dir/src/daemon.c.s
 .PHONY : src/daemon.c.s
+
+src/print_file.o: src/print_file.c.o
+.PHONY : src/print_file.o
+
+# target to build an object file
+src/print_file.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tig_cli_helpers.dir/build.make CMakeFiles/tig_cli_helpers.dir/src/print_file.c.o
+.PHONY : src/print_file.c.o
+
+src/print_file.i: src/print_file.c.i
+.PHONY : src/print_file.i
+
+# target to preprocess a source file
+src/print_file.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tig_cli_helpers.dir/build.make CMakeFiles/tig_cli_helpers.dir/src/print_file.c.i
+.PHONY : src/print_file.c.i
+
+src/print_file.s: src/print_file.c.s
+.PHONY : src/print_file.s
+
+# target to generate assembly for a file
+src/print_file.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tig_cli_helpers.dir/build.make CMakeFiles/tig_cli_helpers.dir/src/print_file.c.s
+.PHONY : src/print_file.c.s
 
 src/recv_directory.o: src/recv_directory.c.o
 .PHONY : src/recv_directory.o
@@ -346,8 +383,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... TIG_cli"
 	@echo "... TIG_srv"
+	@echo "... tig_cli_helpers"
 	@echo "... tig_helpers"
-	@echo "... tig_srv_daemon"
+	@echo "... tig_srv_helpers"
 	@echo "... src/TIG_cli.o"
 	@echo "... src/TIG_cli.i"
 	@echo "... src/TIG_cli.s"
@@ -357,6 +395,9 @@ help:
 	@echo "... src/daemon.o"
 	@echo "... src/daemon.i"
 	@echo "... src/daemon.s"
+	@echo "... src/print_file.o"
+	@echo "... src/print_file.i"
+	@echo "... src/print_file.s"
 	@echo "... src/recv_directory.o"
 	@echo "... src/recv_directory.i"
 	@echo "... src/recv_directory.s"

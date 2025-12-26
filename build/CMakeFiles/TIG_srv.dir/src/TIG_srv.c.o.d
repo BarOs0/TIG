@@ -66,6 +66,7 @@ CMakeFiles/TIG_srv.dir/src/TIG_srv.c.o: \
  /usr/include/x86_64-linux-gnu/bits/unistd_ext.h \
  /home/bartek/PS2025/projekt/include/recv_directory.h \
  /home/bartek/PS2025/projekt/include/send_directory.h \
+ /home/bartek/PS2025/projekt/include/send_file.h \
  /usr/include/x86_64-linux-gnu/sys/time.h \
  /usr/include/x86_64-linux-gnu/sys/stat.h \
  /usr/include/x86_64-linux-gnu/bits/stat.h \

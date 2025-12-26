@@ -46,6 +46,7 @@ CMakeFiles/TIG_cli.dir/src/TIG_cli.c.o: \
  /usr/include/x86_64-linux-gnu/bits/struct_mutex.h \
  /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h \
  /home/bartek/PS2025/projekt/include/send_directory.h \
+ /home/bartek/PS2025/projekt/include/print_file.h \
  /usr/include/x86_64-linux-gnu/sys/socket.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_iovec.h \
  /usr/include/x86_64-linux-gnu/bits/socket.h \

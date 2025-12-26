@@ -1,1 +1,1 @@
-/usr/bin/cc CMakeFiles/TIG_srv.dir/src/TIG_srv.c.o -o TIG_srv  libtig_helpers.a libtig_srv_daemon.a 
+/usr/bin/cc CMakeFiles/TIG_srv.dir/src/TIG_srv.c.o -o TIG_srv  libtig_helpers.a libtig_srv_helpers.a 

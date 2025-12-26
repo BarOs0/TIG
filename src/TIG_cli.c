@@ -1,6 +1,7 @@
 #include "TIG_cli.h"
 #include "recv_directory.h"
 #include "send_directory.h"
+#include "print_file.h"
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netdb.h>
@@ -62,7 +63,7 @@ int connection(const char* opt, const char* repo_name, const char* commit) {
                 fprintf(stderr, "TIG_cli.c repos write() error: %s\n", strerror(errno));
                 return -1;
             }
-            recv_directory(sockfd, cwd);
+            print_file(sockfd);
         }
     }
     else{
@@ -119,7 +120,7 @@ int connection(const char* opt, const char* repo_name, const char* commit) {
         }
     }
 
-    fprintf(stderr, "\nOK\n");
+    fprintf(stderr, "OK\n");
     freeaddrinfo(res);
     close(sockfd);
 
@@ -137,7 +138,7 @@ int main(int argc, char **argv){
         return connection(argv[1], argv[2], argv[3]);
     }
     else{
-        fprintf(stderr, "ERROR: usage: ./TIG_cli <push/repos> or ./TIG_cli <commit> <repo name> <message> or ./TIG_cli <pull> <repo name>\n");
+        fprintf(stderr, "ERROR: usage: ./TIG_cli <repos> or ./TIG_cli <commit> <repo name> <message> or ./TIG_cli <pull/push> <repo name>\n");
     }
     
     return 0;

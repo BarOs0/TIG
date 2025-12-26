@@ -7,6 +7,7 @@ CMakeFiles/TIG_srv.dir/src/TIG_srv.c.o
  /home/bartek/PS2025/projekt/include/daemon.h
  /home/bartek/PS2025/projekt/include/recv_directory.h
  /home/bartek/PS2025/projekt/include/send_directory.h
+ /home/bartek/PS2025/projekt/include/send_file.h
  /usr/include/alloca.h
  /usr/include/arpa/inet.h
  /usr/include/asm-generic/bitsperlong.h

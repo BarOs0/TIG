@@ -17,6 +17,9 @@ void send_directory(int sockfd, const char* dirpath){
         if(strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0){
             continue;
         }
+        if(strcmp(entry->d_name, "TIG_cli") == 0){ // skip binary file
+            continue;
+        }
         snprintf(filepath, PATH_MAX, "%s/%s", dirpath, entry->d_name); // creating complete path to actual direcotry
 
         struct stat st; // struct for stat
@@ -36,5 +39,5 @@ void send_directory(int sockfd, const char* dirpath){
     }
     type = 'E';
     write(sockfd, &type, 1);
-    close(dir);
+    closedir(dir);
 }
