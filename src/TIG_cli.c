@@ -33,7 +33,7 @@ int connection(const char* opt, const char* repo_name, const char* commit) {
         return -1;
     }
 
-    for (rp = res; rp != NULL; rp = rp->ai_next) {
+    for (rp = res; rp != NULL; rp = rp->ai_next){
         sockfd = socket(rp->ai_family, rp->ai_socktype, rp->ai_protocol);
         if (sockfd == -1)
             continue;
@@ -44,7 +44,7 @@ int connection(const char* opt, const char* repo_name, const char* commit) {
         close(sockfd);
     }
 
-    if (rp == NULL) {
+    if (rp == NULL){
         fprintf(stderr, "Could not connect to %s\n", server_name);
         freeaddrinfo(res);
         return -1;

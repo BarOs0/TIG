@@ -167,6 +167,10 @@ void run(void) {
         exit(1);
     }
 
+    char time_str[TIME_BUFF_SIZE] = {0};
+    get_time(time_str, TIME_BUFF_SIZE);
+    syslog(LOG_INFO, "%s: %s\n", time_str, "System ready, waiting for clients...");
+
     while(1){
         size = sizeof(cliaddr);
         if((connfd = accept(listenfd, (struct sockaddr*) &cliaddr, &size)) < 0){
@@ -179,11 +183,8 @@ void run(void) {
 }
 
 int main(int argc, char** argv){
-    char time_str[TIME_BUFF_SIZE] = {0};
     daemon_init("TIG_srv", LOG_DAEMON, getuid());
     openlog("TIG_srv", LOG_PID, LOG_DAEMON);
     run();
-    get_time(time_str, TIME_BUFF_SIZE);
-    syslog(LOG_INFO, "%s: %s\n", time_str, "System ready, waiting for clients...");
     return 0;
 }
