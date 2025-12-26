@@ -28,6 +28,22 @@ void handle_client(int connfd, struct sockaddr_in6 *cliaddr) {
     char time_str[TIME_BUFF_SIZE] = {0};
     FILE *f;
 
+    struct sockaddr_in6 peeraddr;
+    socklen_t peeraddr_len = sizeof(peeraddr);
+    char peeraddr_str[INET6_ADDRSTRLEN] = {0};
+    bzero(&peeraddr, sizeof(peeraddr));
+    if(getpeername(connfd, (struct sockaddr*) &peeraddr, &peeraddr_len) < 0){
+        syslog(LOG_ERR, "TIG_srv.c getpeername() error: %s", strerror(errno));
+        return;
+    }
+
+    if(inet_ntop(AF_INET6, &peeraddr.sin6_addr, peeraddr_str, INET6_ADDRSTRLEN) < 0){
+        syslog(LOG_ERR, "TIG_srv.c inet_ntop() error: %s", strerror(errno));
+        return;
+    }
+    
+    get_time(time_str, TIME_BUFF_SIZE);
+
     if(read(connfd, &cmd, 1) < 0){
         syslog(LOG_ERR, "TIG_srv.c read() cmd error: %s", strerror(errno));
         return;
@@ -36,12 +52,13 @@ void handle_client(int connfd, struct sockaddr_in6 *cliaddr) {
     switch(cmd){
 
         case 'U':
-            get_time(time_str);
-            syslog(LOG_INFO, "%s: %s\n", time_str, " TODO ");
             if(read(connfd, name_buff, NAME_BUFF_SIZE) < 0){
-                syslog(LOG_ERR, "TIG_srv.c read() name push error: %s", strerror(errno));
+                syslog(LOG_ERR, "TIG_srv.c read() name pull error: %s", strerror(errno));
                 return;
             }
+
+            syslog(LOG_INFO, "%s: HOST: %s, %s: %s\n", time_str, peeraddr_str, "pulled", name_buff);
+
             strcpy(path_buff, REPOS_PATH);
             strcat(path_buff, "/repos/");
             strcat(path_buff, name_buff);
@@ -49,6 +66,7 @@ void handle_client(int connfd, struct sockaddr_in6 *cliaddr) {
             break;
 
         case 'R':
+            syslog(LOG_INFO, "%s: HOST: %s, %s\n", time_str, peeraddr_str, "listed repos");
             strcpy(path_buff, REPOS_PATH);
             strcat(path_buff, "/list");
             send_file(connfd, path_buff);
@@ -56,12 +74,14 @@ void handle_client(int connfd, struct sockaddr_in6 *cliaddr) {
         
         case 'P':
             if(read(connfd, name_buff, NAME_BUFF_SIZE) < 0){
-                syslog(LOG_ERR, "TIG_srv.c read() name pull error: %s", strerror(errno));
+                syslog(LOG_ERR, "TIG_srv.c read() name push error: %s", strerror(errno));
                 return;
             }
+
+            syslog(LOG_INFO, "%s: HOST: %s, %s: %s\n", time_str, peeraddr_str, "pushed", name_buff);
+
             strcpy(path_buff, REPOS_PATH);
-            strcat(path_buff, "/repos/");
-            strcat(path_buff, name_buff);
+            strcat(path_buff, "/repos");
             recv_directory(connfd, path_buff);
 
             struct stat st = {0};
@@ -98,6 +118,8 @@ void handle_client(int connfd, struct sockaddr_in6 *cliaddr) {
                 return;
             }
 
+            syslog(LOG_INFO, "%s: HOST: %s, %s: %s\n", time_str, peeraddr_str, "commited", name_buff);
+
             if(read(connfd, commit_buff, COMMIT_BUFF_SIZE) < 0){
                 syslog(LOG_ERR, "TIG_srv.c read() commit commit error: %s", strerror(errno));
                 return;
@@ -107,14 +129,12 @@ void handle_client(int connfd, struct sockaddr_in6 *cliaddr) {
             strcat(path_buff, "/commits/");
             strcat(path_buff, name_buff);
 
-            get_time(time_str);
-
             f = fopen(path_buff, "a");
             if(f == NULL){
                 syslog(LOG_ERR, "open commit file error: %s", strerror(errno));
                 return;
             }
-            fprintf(f, "%s: %s\n", time_str, commit_buff);
+            fprintf(f, "%s: HOST: %s, MESSAGE: %s\n", time_str, peeraddr_str, commit_buff);
             fclose(f);
             break;
     }
@@ -163,7 +183,7 @@ int main(int argc, char** argv){
     daemon_init("TIG_srv", LOG_DAEMON, getuid());
     openlog("TIG_srv", LOG_PID, LOG_DAEMON);
     run();
-    get_time(time_str);
+    get_time(time_str, TIME_BUFF_SIZE);
     syslog(LOG_INFO, "%s: %s\n", time_str, "System ready, waiting for clients...");
     return 0;
 }

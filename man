@@ -1,3 +1,4 @@
 sudo ip6tables -I INPUT -p tcp --dport 2025 -j ACCEPT //wylaczenie firewall na porcie 2025
 sudo grep TIG_srv /var/log/syslog //przegladanie logow
 sudo ps aux | grep TIG_srv //sprawdzenie czy proces serwera (demon) jest aktywny
+sudo truncate -s 0 /var/log/syslog //usuwanie logow z sysloga

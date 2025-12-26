@@ -253,6 +253,30 @@ src/daemon.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/tig_srv_helpers.dir/build.make CMakeFiles/tig_srv_helpers.dir/src/daemon.c.s
 .PHONY : src/daemon.c.s
 
+src/get_time.o: src/get_time.c.o
+.PHONY : src/get_time.o
+
+# target to build an object file
+src/get_time.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tig_helpers.dir/build.make CMakeFiles/tig_helpers.dir/src/get_time.c.o
+.PHONY : src/get_time.c.o
+
+src/get_time.i: src/get_time.c.i
+.PHONY : src/get_time.i
+
+# target to preprocess a source file
+src/get_time.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tig_helpers.dir/build.make CMakeFiles/tig_helpers.dir/src/get_time.c.i
+.PHONY : src/get_time.c.i
+
+src/get_time.s: src/get_time.c.s
+.PHONY : src/get_time.s
+
+# target to generate assembly for a file
+src/get_time.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tig_helpers.dir/build.make CMakeFiles/tig_helpers.dir/src/get_time.c.s
+.PHONY : src/get_time.c.s
+
 src/print_file.o: src/print_file.c.o
 .PHONY : src/print_file.o
 
@@ -395,6 +419,9 @@ help:
 	@echo "... src/daemon.o"
 	@echo "... src/daemon.i"
 	@echo "... src/daemon.s"
+	@echo "... src/get_time.o"
+	@echo "... src/get_time.i"
+	@echo "... src/get_time.s"
 	@echo "... src/print_file.o"
 	@echo "... src/print_file.i"
 	@echo "... src/print_file.s"

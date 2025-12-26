@@ -5,6 +5,7 @@ CMakeFiles/TIG_srv.dir/src/TIG_srv.c.o
  /home/bartek/PS2025/projekt/src/TIG_srv.c
  /home/bartek/PS2025/projekt/include/TIG_srv.h
  /home/bartek/PS2025/projekt/include/daemon.h
+ /home/bartek/PS2025/projekt/include/get_time.h
  /home/bartek/PS2025/projekt/include/recv_directory.h
  /home/bartek/PS2025/projekt/include/send_directory.h
  /home/bartek/PS2025/projekt/include/send_file.h
@@ -36,7 +37,6 @@ CMakeFiles/TIG_srv.dir/src/TIG_srv.c.o
  /usr/include/string.h
  /usr/include/strings.h
  /usr/include/syslog.h
- /usr/include/time.h
  /usr/include/unistd.h
  /usr/include/x86_64-linux-gnu/asm/bitsperlong.h
  /usr/include/x86_64-linux-gnu/asm/errno.h
@@ -95,7 +95,6 @@ CMakeFiles/TIG_srv.dir/src/TIG_srv.c.o
  /usr/include/x86_64-linux-gnu/bits/struct_stat.h
  /usr/include/x86_64-linux-gnu/bits/syslog-path.h
  /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h
- /usr/include/x86_64-linux-gnu/bits/time.h
  /usr/include/x86_64-linux-gnu/bits/time64.h
  /usr/include/x86_64-linux-gnu/bits/timesize.h
  /usr/include/x86_64-linux-gnu/bits/types.h
@@ -119,12 +118,10 @@ CMakeFiles/TIG_srv.dir/src/TIG_srv.c.o
  /usr/include/x86_64-linux-gnu/bits/types/stack_t.h
  /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h
  /usr/include/x86_64-linux-gnu/bits/types/struct_iovec.h
- /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h
  /usr/include/x86_64-linux-gnu/bits/types/struct_osockaddr.h
  /usr/include/x86_64-linux-gnu/bits/types/struct_sigstack.h
  /usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h
  /usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h
- /usr/include/x86_64-linux-gnu/bits/types/struct_tm.h
  /usr/include/x86_64-linux-gnu/bits/types/time_t.h
  /usr/include/x86_64-linux-gnu/bits/types/timer_t.h
  /usr/include/x86_64-linux-gnu/bits/typesizes.h
@@ -140,7 +137,6 @@ CMakeFiles/TIG_srv.dir/src/TIG_srv.c.o
  /usr/include/x86_64-linux-gnu/sys/socket.h
  /usr/include/x86_64-linux-gnu/sys/stat.h
  /usr/include/x86_64-linux-gnu/sys/syslog.h
- /usr/include/x86_64-linux-gnu/sys/time.h
  /usr/include/x86_64-linux-gnu/sys/types.h
  /usr/include/x86_64-linux-gnu/sys/ucontext.h
  /usr/lib/gcc/x86_64-linux-gnu/13/include/limits.h

@@ -1,4 +1,6 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/tig_helpers.dir/src/get_time.c.o"
+  "CMakeFiles/tig_helpers.dir/src/get_time.c.o.d"
   "CMakeFiles/tig_helpers.dir/src/recv_directory.c.o"
   "CMakeFiles/tig_helpers.dir/src/recv_directory.c.o.d"
   "CMakeFiles/tig_helpers.dir/src/recv_file.c.o"

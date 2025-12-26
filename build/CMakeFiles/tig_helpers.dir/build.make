@@ -125,12 +125,27 @@ CMakeFiles/tig_helpers.dir/src/send_directory.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/tig_helpers.dir/src/send_directory.c.s"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/bartek/PS2025/projekt/src/send_directory.c -o CMakeFiles/tig_helpers.dir/src/send_directory.c.s
 
+CMakeFiles/tig_helpers.dir/src/get_time.c.o: CMakeFiles/tig_helpers.dir/flags.make
+CMakeFiles/tig_helpers.dir/src/get_time.c.o: /home/bartek/PS2025/projekt/src/get_time.c
+CMakeFiles/tig_helpers.dir/src/get_time.c.o: CMakeFiles/tig_helpers.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/bartek/PS2025/projekt/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/tig_helpers.dir/src/get_time.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/tig_helpers.dir/src/get_time.c.o -MF CMakeFiles/tig_helpers.dir/src/get_time.c.o.d -o CMakeFiles/tig_helpers.dir/src/get_time.c.o -c /home/bartek/PS2025/projekt/src/get_time.c
+
+CMakeFiles/tig_helpers.dir/src/get_time.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/tig_helpers.dir/src/get_time.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/bartek/PS2025/projekt/src/get_time.c > CMakeFiles/tig_helpers.dir/src/get_time.c.i
+
+CMakeFiles/tig_helpers.dir/src/get_time.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/tig_helpers.dir/src/get_time.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/bartek/PS2025/projekt/src/get_time.c -o CMakeFiles/tig_helpers.dir/src/get_time.c.s
+
 # Object files for target tig_helpers
 tig_helpers_OBJECTS = \
 "CMakeFiles/tig_helpers.dir/src/recv_file.c.o" \
 "CMakeFiles/tig_helpers.dir/src/recv_directory.c.o" \
 "CMakeFiles/tig_helpers.dir/src/send_file.c.o" \
-"CMakeFiles/tig_helpers.dir/src/send_directory.c.o"
+"CMakeFiles/tig_helpers.dir/src/send_directory.c.o" \
+"CMakeFiles/tig_helpers.dir/src/get_time.c.o"
 
 # External object files for target tig_helpers
 tig_helpers_EXTERNAL_OBJECTS =
@@ -139,9 +154,10 @@ libtig_helpers.a: CMakeFiles/tig_helpers.dir/src/recv_file.c.o
 libtig_helpers.a: CMakeFiles/tig_helpers.dir/src/recv_directory.c.o
 libtig_helpers.a: CMakeFiles/tig_helpers.dir/src/send_file.c.o
 libtig_helpers.a: CMakeFiles/tig_helpers.dir/src/send_directory.c.o
+libtig_helpers.a: CMakeFiles/tig_helpers.dir/src/get_time.c.o
 libtig_helpers.a: CMakeFiles/tig_helpers.dir/build.make
 libtig_helpers.a: CMakeFiles/tig_helpers.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/bartek/PS2025/projekt/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking C static library libtig_helpers.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/bartek/PS2025/projekt/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking C static library libtig_helpers.a"
 	$(CMAKE_COMMAND) -P CMakeFiles/tig_helpers.dir/cmake_clean_target.cmake
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/tig_helpers.dir/link.txt --verbose=$(VERBOSE)
 

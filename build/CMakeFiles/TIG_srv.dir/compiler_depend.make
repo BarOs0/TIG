@@ -4,6 +4,7 @@
 CMakeFiles/TIG_srv.dir/src/TIG_srv.c.o: /home/bartek/PS2025/projekt/src/TIG_srv.c \
   /home/bartek/PS2025/projekt/include/TIG_srv.h \
   /home/bartek/PS2025/projekt/include/daemon.h \
+  /home/bartek/PS2025/projekt/include/get_time.h \
   /home/bartek/PS2025/projekt/include/recv_directory.h \
   /home/bartek/PS2025/projekt/include/send_directory.h \
   /home/bartek/PS2025/projekt/include/send_file.h \
@@ -35,7 +36,6 @@ CMakeFiles/TIG_srv.dir/src/TIG_srv.c.o: /home/bartek/PS2025/projekt/src/TIG_srv.
   /usr/include/string.h \
   /usr/include/strings.h \
   /usr/include/syslog.h \
-  /usr/include/time.h \
   /usr/include/unistd.h \
   /usr/include/x86_64-linux-gnu/asm/bitsperlong.h \
   /usr/include/x86_64-linux-gnu/asm/errno.h \
@@ -94,7 +94,6 @@ CMakeFiles/TIG_srv.dir/src/TIG_srv.c.o: /home/bartek/PS2025/projekt/src/TIG_srv.
   /usr/include/x86_64-linux-gnu/bits/struct_stat.h \
   /usr/include/x86_64-linux-gnu/bits/syslog-path.h \
   /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h \
-  /usr/include/x86_64-linux-gnu/bits/time.h \
   /usr/include/x86_64-linux-gnu/bits/time64.h \
   /usr/include/x86_64-linux-gnu/bits/timesize.h \
   /usr/include/x86_64-linux-gnu/bits/types.h \
@@ -118,12 +117,10 @@ CMakeFiles/TIG_srv.dir/src/TIG_srv.c.o: /home/bartek/PS2025/projekt/src/TIG_srv.
   /usr/include/x86_64-linux-gnu/bits/types/stack_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_iovec.h \
-  /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_osockaddr.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_sigstack.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h \
-  /usr/include/x86_64-linux-gnu/bits/types/struct_tm.h \
   /usr/include/x86_64-linux-gnu/bits/types/time_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/timer_t.h \
   /usr/include/x86_64-linux-gnu/bits/typesizes.h \
@@ -139,7 +136,6 @@ CMakeFiles/TIG_srv.dir/src/TIG_srv.c.o: /home/bartek/PS2025/projekt/src/TIG_srv.
   /usr/include/x86_64-linux-gnu/sys/socket.h \
   /usr/include/x86_64-linux-gnu/sys/stat.h \
   /usr/include/x86_64-linux-gnu/sys/syslog.h \
-  /usr/include/x86_64-linux-gnu/sys/time.h \
   /usr/include/x86_64-linux-gnu/sys/types.h \
   /usr/include/x86_64-linux-gnu/sys/ucontext.h \
   /usr/lib/gcc/x86_64-linux-gnu/13/include/limits.h \
@@ -151,8 +147,6 @@ CMakeFiles/TIG_srv.dir/src/TIG_srv.c.o: /home/bartek/PS2025/projekt/src/TIG_srv.
 /usr/include/x86_64-linux-gnu/sys/ucontext.h:
 
 /usr/include/x86_64-linux-gnu/sys/types.h:
-
-/usr/include/x86_64-linux-gnu/sys/time.h:
 
 /usr/include/x86_64-linux-gnu/sys/syslog.h:
 
@@ -166,12 +160,6 @@ CMakeFiles/TIG_srv.dir/src/TIG_srv.c.o: /home/bartek/PS2025/projekt/src/TIG_srv.
 
 /usr/include/x86_64-linux-gnu/bits/wordsize.h:
 
-/usr/include/x86_64-linux-gnu/bits/waitstatus.h:
-
-/usr/include/x86_64-linux-gnu/bits/waitflags.h:
-
-/usr/include/x86_64-linux-gnu/bits/unistd_ext.h:
-
 /usr/include/x86_64-linux-gnu/bits/byteswap.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/__sigset_t.h:
@@ -183,6 +171,8 @@ CMakeFiles/TIG_srv.dir/src/TIG_srv.c.o: /home/bartek/PS2025/projekt/src/TIG_srv.
 /usr/include/stdio.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h:
+
+/usr/include/x86_64-linux-gnu/bits/floatn.h:
 
 /usr/include/x86_64-linux-gnu/bits/fcntl.h:
 
@@ -224,18 +214,6 @@ CMakeFiles/TIG_srv.dir/src/TIG_srv.c.o: /home/bartek/PS2025/projekt/src/TIG_srv.
 
 /usr/include/x86_64-linux-gnu/bits/siginfo-arch.h:
 
-/usr/include/asm-generic/errno.h:
-
-/usr/include/x86_64-linux-gnu/asm/posix_types_64.h:
-
-/usr/include/asm-generic/errno-base.h:
-
-/usr/include/time.h:
-
-/usr/include/x86_64-linux-gnu/bits/signum-arch.h:
-
-/usr/include/fcntl.h:
-
 /usr/lib/gcc/x86_64-linux-gnu/13/include/limits.h:
 
 /usr/include/x86_64-linux-gnu/bits/typesizes.h:
@@ -243,10 +221,6 @@ CMakeFiles/TIG_srv.dir/src/TIG_srv.c.o: /home/bartek/PS2025/projekt/src/TIG_srv.
 /usr/include/x86_64-linux-gnu/bits/types/struct_osockaddr.h:
 
 /usr/include/x86_64-linux-gnu/asm/posix_types.h:
-
-/usr/include/x86_64-linux-gnu/bits/posix2_lim.h:
-
-/usr/include/linux/limits.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/__FILE.h:
 
@@ -256,13 +230,29 @@ CMakeFiles/TIG_srv.dir/src/TIG_srv.c.o: /home/bartek/PS2025/projekt/src/TIG_srv.
 
 /usr/include/x86_64-linux-gnu/bits/in.h:
 
+/home/bartek/PS2025/projekt/include/get_time.h:
+
 /usr/include/alloca.h:
+
+/usr/include/x86_64-linux-gnu/asm/posix_types_64.h:
+
+/usr/include/asm-generic/errno-base.h:
+
+/usr/include/asm-generic/errno.h:
+
+/usr/include/fcntl.h:
+
+/usr/include/linux/limits.h:
+
+/usr/include/x86_64-linux-gnu/bits/posix2_lim.h:
 
 /usr/include/x86_64-linux-gnu/bits/long-double.h:
 
 /usr/include/arpa/inet.h:
 
 /home/bartek/PS2025/projekt/include/TIG_srv.h:
+
+/home/bartek/PS2025/projekt/include/daemon.h:
 
 /usr/include/features-time64.h:
 
@@ -275,8 +265,6 @@ CMakeFiles/TIG_srv.dir/src/TIG_srv.c.o: /home/bartek/PS2025/projekt/src/TIG_srv.
 /usr/include/x86_64-linux-gnu/asm/socket.h:
 
 /usr/include/stdlib.h:
-
-/home/bartek/PS2025/projekt/include/daemon.h:
 
 /usr/include/asm-generic/sockios.h:
 
@@ -300,6 +288,10 @@ CMakeFiles/TIG_srv.dir/src/TIG_srv.c.o: /home/bartek/PS2025/projekt/src/TIG_srv.
 
 /usr/include/rpc/netdb.h:
 
+/usr/include/asm-generic/posix_types.h:
+
+/usr/include/stdc-predef.h:
+
 /usr/include/x86_64-linux-gnu/bits/types/clock_t.h:
 
 /usr/include/netdb.h:
@@ -308,13 +300,7 @@ CMakeFiles/TIG_srv.dir/src/TIG_srv.c.o: /home/bartek/PS2025/projekt/src/TIG_srv.
 
 /usr/include/x86_64-linux-gnu/bits/socket_type.h:
 
-/usr/include/asm-generic/posix_types.h:
-
-/usr/include/stdc-predef.h:
-
 /usr/include/x86_64-linux-gnu/bits/netdb.h:
-
-/usr/include/x86_64-linux-gnu/bits/time.h:
 
 /usr/include/x86_64-linux-gnu/bits/posix_opt.h:
 
@@ -345,6 +331,8 @@ CMakeFiles/TIG_srv.dir/src/TIG_srv.c.o: /home/bartek/PS2025/projekt/src/TIG_srv.
 /usr/include/x86_64-linux-gnu/bits/siginfo-consts.h:
 
 /usr/include/x86_64-linux-gnu/bits/signal_ext.h:
+
+/usr/include/x86_64-linux-gnu/bits/signum-arch.h:
 
 /usr/include/x86_64-linux-gnu/bits/sigstksz.h:
 
@@ -394,8 +382,6 @@ CMakeFiles/TIG_srv.dir/src/TIG_srv.c.o: /home/bartek/PS2025/projekt/src/TIG_srv.
 
 /usr/include/x86_64-linux-gnu/bits/types/FILE.h:
 
-/usr/include/x86_64-linux-gnu/bits/types/struct_tm.h:
-
 /usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h:
@@ -420,10 +406,6 @@ CMakeFiles/TIG_srv.dir/src/TIG_srv.c.o: /home/bartek/PS2025/projekt/src/TIG_srv.
 
 /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h:
 
-/usr/include/x86_64-linux-gnu/bits/floatn.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h:
-
 /home/bartek/PS2025/projekt/include/recv_directory.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/struct_sigstack.h:
@@ -437,3 +419,9 @@ CMakeFiles/TIG_srv.dir/src/TIG_srv.c.o: /home/bartek/PS2025/projekt/src/TIG_srv.
 /usr/include/x86_64-linux-gnu/bits/stdlib-float.h:
 
 /usr/include/x86_64-linux-gnu/bits/uintn-identity.h:
+
+/usr/include/x86_64-linux-gnu/bits/unistd_ext.h:
+
+/usr/include/x86_64-linux-gnu/bits/waitflags.h:
+
+/usr/include/x86_64-linux-gnu/bits/waitstatus.h:

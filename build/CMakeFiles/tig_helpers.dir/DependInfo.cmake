@@ -8,6 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "/home/bartek/PS2025/projekt/src/get_time.c" "CMakeFiles/tig_helpers.dir/src/get_time.c.o" "gcc" "CMakeFiles/tig_helpers.dir/src/get_time.c.o.d"
   "/home/bartek/PS2025/projekt/src/recv_directory.c" "CMakeFiles/tig_helpers.dir/src/recv_directory.c.o" "gcc" "CMakeFiles/tig_helpers.dir/src/recv_directory.c.o.d"
   "/home/bartek/PS2025/projekt/src/recv_file.c" "CMakeFiles/tig_helpers.dir/src/recv_file.c.o" "gcc" "CMakeFiles/tig_helpers.dir/src/recv_file.c.o.d"
   "/home/bartek/PS2025/projekt/src/send_directory.c" "CMakeFiles/tig_helpers.dir/src/send_directory.c.o" "gcc" "CMakeFiles/tig_helpers.dir/src/send_directory.c.o.d"
