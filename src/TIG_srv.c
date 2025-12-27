@@ -21,6 +21,7 @@
 #include <syslog.h>
 #include <limits.h>
 #include <pthread.h>
+#include <sys/epoll.h>
 
 void handle_client(int connfd, struct sockaddr_in6 *cliaddr) {
     char cmd;
@@ -76,8 +77,7 @@ void handle_client(int connfd, struct sockaddr_in6 *cliaddr) {
             send_file(connfd, path_buff);
             break;
         
-        case 'P': //pushroot@0a0ec4522820:/tmp# 
-
+        case 'P': //push
 
             if(read(connfd, name_buff, NAME_BUFF_SIZE) < 0){
                 syslog(LOG_ERR, "TIG_srv.c read() name push error: %s", strerror(errno));
@@ -157,12 +157,13 @@ void handle_client(int connfd, struct sockaddr_in6 *cliaddr) {
 }
 
 void run(void) {
-    int listenfd, connfd;
-    struct sockaddr_in6 servaddr, cliaddr;
+    int listenfd, epollfd;
+    struct sockaddr_in6 servaddr;
+    struct epoll_event ev, events[MAX_EVENTS];
     socklen_t size;
+    int connfd;
 
     bzero(&servaddr, sizeof(servaddr));
-    bzero(&cliaddr, sizeof(cliaddr));
 
     if((listenfd = socket(AF_INET6, SOCK_STREAM, 0)) < 0){
         syslog(LOG_ERR, "socket() error: %s", strerror(errno));
@@ -187,14 +188,46 @@ void run(void) {
     get_time(time_str, TIME_BUFF_SIZE);
     syslog(LOG_INFO, "%s: %s\n", time_str, "System ready, waiting for clients...");
 
+    fcntl(listenfd, F_SETFL, O_NONBLOCK);
+
+    epollfd = epoll_create1(0);
+    if(epollfd < 0){
+        syslog(LOG_ERR, "epoll_create1() error: %s", strerror(errno));
+        exit(1);
+    }
+
+    ev.events = EPOLLIN;
+    ev.data.fd = listenfd;
+    epoll_ctl(epollfd, EPOLL_CTL_ADD, listenfd, &ev);
+
     while(1){
-        size = sizeof(cliaddr);
-        if((connfd = accept(listenfd, (struct sockaddr*) &cliaddr, &size)) < 0){
-            syslog(LOG_ERR, "socket() error: %s", strerror(errno));
-            continue;
+        int nfds = epoll_wait(epollfd, events, MAX_EVENTS, -1);
+        for(int i = 0; i < nfds; ++i){
+            if(events[i].data.fd == listenfd){
+                struct sockaddr_in6 cliaddr;
+                bzero(&cliaddr, sizeof(cliaddr));
+                size = sizeof(cliaddr);
+
+                if((connfd = accept(listenfd, (struct sockaddr*)&cliaddr, &size)) < 0){
+                    continue;
+                }
+
+                fcntl(connfd, F_SETFL, O_NONBLOCK);
+                ev.events = EPOLLIN;
+                ev.data.fd = connfd;
+                epoll_ctl(epollfd, EPOLL_CTL_ADD, connfd, &ev);
+            } else {
+
+                struct sockaddr_in6 cliaddr;
+                bzero(&cliaddr, sizeof(cliaddr));
+                size = sizeof(cliaddr);
+
+                handle_client(events[i].data.fd, &cliaddr);
+
+                close(events[i].data.fd);
+                epoll_ctl(epollfd, EPOLL_CTL_DEL, events[i].data.fd, NULL);
+            }
         }
-        handle_client(connfd, &cliaddr);
-        close(connfd);
     }
 }
 

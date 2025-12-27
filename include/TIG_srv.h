@@ -4,6 +4,7 @@
 #include <netinet/in.h>
 
 #define LISTENQ 2
+#define MAX_EVENTS 32
 #define LISTEN_PORT_FTP 2025
 #define COMMIT_BUFF_SIZE 64
 #define REPOS_BUFF_SIZE 1024
