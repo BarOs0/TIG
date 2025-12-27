@@ -5,6 +5,7 @@
 #include "send_file.h"
 #include "get_time.h"
 #include "copy_directory.h"
+#include "mcast_respond.h"
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/stat.h>
@@ -19,6 +20,7 @@
 #include <unistd.h>
 #include <syslog.h>
 #include <limits.h>
+#include <pthread.h>
 
 void handle_client(int connfd, struct sockaddr_in6 *cliaddr) {
     char cmd;
@@ -74,7 +76,8 @@ void handle_client(int connfd, struct sockaddr_in6 *cliaddr) {
             send_file(connfd, path_buff);
             break;
         
-        case 'P': //push
+        case 'P': //pushroot@0a0ec4522820:/tmp# 
+
 
             if(read(connfd, name_buff, NAME_BUFF_SIZE) < 0){
                 syslog(LOG_ERR, "TIG_srv.c read() name push error: %s", strerror(errno));
@@ -198,6 +201,8 @@ void run(void) {
 int main(int argc, char** argv){
     daemon_init("TIG_srv", LOG_DAEMON, getuid());
     openlog("TIG_srv", LOG_PID, LOG_DAEMON);
+    pthread_t mcast_respond_thread;
+    pthread_create(&mcast_respond_thread, NULL, mcast_respond, NULL);
     run();
     return 0;
 }
