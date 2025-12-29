@@ -34,74 +34,76 @@ void handle_client(int connfd, struct sockaddr_in6 *cliaddr) {
     socklen_t peeraddr_len = sizeof(peeraddr);
     char peeraddr_str[INET6_ADDRSTRLEN] = {0};
     bzero(&peeraddr, sizeof(peeraddr));
-    if(getpeername(connfd, (struct sockaddr*) &peeraddr, &peeraddr_len) < 0){
+    if(getpeername(connfd, (struct sockaddr*) &peeraddr, &peeraddr_len) < 0){ // get peer address (useful for logging and data storage)
         syslog(LOG_ERR, "TIG_srv.c getpeername() error: %s", strerror(errno));
         return;
     }
 
-    if(inet_ntop(AF_INET6, &peeraddr.sin6_addr, peeraddr_str, INET6_ADDRSTRLEN) < 0){
+    if(inet_ntop(AF_INET6, &peeraddr.sin6_addr, peeraddr_str, INET6_ADDRSTRLEN) < 0){ // convert peer addres to presentation form
         syslog(LOG_ERR, "TIG_srv.c inet_ntop() error: %s", strerror(errno));
         return;
     }
     
-    get_time(time_str, TIME_BUFF_SIZE);
+    get_time(time_str, TIME_BUFF_SIZE); // get current time (useful for logging and data storage)
 
-    if(read(connfd, &cmd, 1) < 0){
+    if(read(connfd, &cmd, 1) < 0){ // read commands from peer
         syslog(LOG_ERR, "TIG_srv.c read() cmd error: %s", strerror(errno));
         return;
     }
 
     switch(cmd){
 
-        case 'U': //pull
-            if(read(connfd, name_buff, NAME_BUFF_SIZE) < 0){
+        case 'U': // 'U' - pull
+            if(read(connfd, name_buff, NAME_BUFF_SIZE) < 0){ // read the name of the pulled repository
                 syslog(LOG_ERR, "TIG_srv.c read() name pull error: %s", strerror(errno));
                 return;
             }
 
-            syslog(LOG_INFO, "%s: HOST: %s, %s: %s\n", time_str, peeraddr_str, "pulled", name_buff);
+            syslog(LOG_INFO, "%s: HOST: %s, %s: %s\n", time_str, peeraddr_str, "pulled", name_buff); // LOGGING FOR ADMINISTRATOR (big brother ;))
 
-            strcpy(path_buff, REPOS_PATH);
+            strcpy(path_buff, REPOS_PATH); // prepare path
             strcat(path_buff, "/repos/");
             strcat(path_buff, name_buff);
-            send_directory(connfd, path_buff);
+            send_directory(connfd, path_buff); // send storaged directory to peer
             break;
 
-        case 'R':
-            syslog(LOG_INFO, "%s: HOST: %s, %s\n", time_str, peeraddr_str, "listed repos");
-            strcpy(path_buff, REPOS_PATH);
+        case 'R': // 'R' - repos
+            syslog(LOG_INFO, "%s: HOST: %s, %s\n", time_str, peeraddr_str, "listed repos"); // LOGGING FOR ADMINISTRATOR 
+            strcpy(path_buff, REPOS_PATH); // preapre path 
             strcat(path_buff, "/list");
-            send_file(connfd, path_buff);
+            send_file(connfd, path_buff); // send repository list to peer
             break;
         
-        case 'P': //push
+        case 'P': // 'P' - push 
 
-            if(read(connfd, name_buff, NAME_BUFF_SIZE) < 0){
+            if(read(connfd, name_buff, NAME_BUFF_SIZE) < 0){ // read the name of the pushed repository
                 syslog(LOG_ERR, "TIG_srv.c read() name push error: %s", strerror(errno));
                 return;
             }
 
-            strcpy(path_buff, REPOS_PATH);
+            strcpy(path_buff, REPOS_PATH); // prepare path for data/repos storage directory
             strcat(path_buff, "/repos/");
             strcat(path_buff, name_buff);
 
-            strcpy(path_buff_2, REPOS_PATH);
+            strcpy(path_buff_2, REPOS_PATH); // preapre path for data/backups storage directory
             strcat(path_buff_2, "/backups/");
             strcat(path_buff_2, name_buff);
 
-            copy_directory(path_buff, path_buff_2);
+            copy_directory(path_buff, path_buff_2); // copy present repository from data/repos to data/backups
 
-            syslog(LOG_INFO, "%s: HOST: %s, %s: %s\n", time_str, peeraddr_str, "pushed", name_buff);
+            syslog(LOG_INFO, "%s: HOST: %s, %s: %s\n", time_str, peeraddr_str, "pushed", name_buff); // LOGGING FOR ADMINISTRATOR 
 
-            strcpy(path_buff, REPOS_PATH);
+            strcpy(path_buff, REPOS_PATH); // prepare path 
             strcat(path_buff, "/repos");
-            recv_directory(connfd, path_buff);
+            recv_directory(connfd, path_buff); // receive whole directory to data storage
+
+            /// ===CREATING AND UPDATING REPOSITORY LIST===
 
             struct stat st = {0};
             strcpy(path_buff, REPOS_PATH);
             strcat(path_buff, "/list");
             if(stat(path_buff, &st) == -1){
-                FILE* touch = fopen(path_buff, "a");
+                FILE* touch = fopen(path_buff, "a"); // create list file
                 if(touch == NULL){
                     syslog(LOG_ERR, "cannot create /srv/data/list: %s", strerror(errno));
                     return;
@@ -109,7 +111,7 @@ void handle_client(int connfd, struct sockaddr_in6 *cliaddr) {
                 fclose(touch);
             }
 
-            f = fopen(path_buff, "a+");
+            f = fopen(path_buff, "a+"); // open file and count lines
             if(f == NULL){
                 syslog(LOG_ERR, "counting repos in /srv/data/list error: %s", strerror(errno));
                 return;
@@ -118,42 +120,42 @@ void handle_client(int connfd, struct sockaddr_in6 *cliaddr) {
             char line[256];
             rewind(f);
             while(fgets(line, sizeof(line), f)){
-                if(line[0] == '\n' || line[0] == '\0') continue;
-                i++;
+                if(line[0] == '\n' || line[0] == '\0') continue; // skip '\n' and '\0'
+                i++; // increment lines
             }
-            fprintf(f, "%d. %s\n", i + 1, name_buff);
+            fprintf(f, "%d. %s\n", i + 1, name_buff); // update list file
             fclose(f);
             break;
 
-        case 'C':
-            if(read(connfd, name_buff, NAME_BUFF_SIZE) < 0){
+        case 'C': // 'C' - commit
+            if(read(connfd, name_buff, NAME_BUFF_SIZE) < 0){ // read the name of the commited repository
                 syslog(LOG_ERR, "TIG_srv.c read() name commit error: %s", strerror(errno));
                 return;
             }
 
-            syslog(LOG_INFO, "%s: HOST: %s, %s: %s\n", time_str, peeraddr_str, "commited", name_buff);
+            syslog(LOG_INFO, "%s: HOST: %s, %s: %s\n", time_str, peeraddr_str, "commited", name_buff); // LOGGING FOR ADMINISTRATOR 
 
-            if(read(connfd, commit_buff, COMMIT_BUFF_SIZE) < 0){
+            if(read(connfd, commit_buff, COMMIT_BUFF_SIZE) < 0){ // read the message of the commit
                 syslog(LOG_ERR, "TIG_srv.c read() commit commit error: %s", strerror(errno));
                 return;
             }
 
-            strcpy(path_buff, REPOS_PATH);
+            strcpy(path_buff, REPOS_PATH); // prepare path
             strcat(path_buff, "/commits/");
             strcat(path_buff, name_buff);
 
-            f = fopen(path_buff, "a");
+            f = fopen(path_buff, "a"); // open or create commit data storage 
             if(f == NULL){
                 syslog(LOG_ERR, "open commit file error: %s", strerror(errno));
                 return;
             }
-            fprintf(f, "%s: HOST: %s, MESSAGE: %s\n", time_str, peeraddr_str, commit_buff);
+            fprintf(f, "%s: HOST: %s, MESSAGE: %s\n", time_str, peeraddr_str, commit_buff); // update commits file with time and peer address
             fclose(f);
             break;
     }
 }
 
-void sigchld_handler(int signo){
+void sigchld_handler(int signo){ // ZOMBIE TERMINATION
     (void)signo;
     while (waitpid(-1, NULL, WNOHANG) > 0);
 }
@@ -166,13 +168,13 @@ void run(void) {
     bzero(&servaddr, sizeof(servaddr));
     bzero(&cliaddr, sizeof(cliaddr));
 
-    struct sigaction sa;
+    struct sigaction sa; // SIGCHLD interception
     sa.sa_handler = sigchld_handler;
     sigemptyset(&sa.sa_mask);
     sa.sa_flags = SA_RESTART;
     sigaction(SIGCHLD, &sa, NULL);
 
-    if((listenfd = socket(AF_INET6, SOCK_STREAM, 0)) < 0){
+    if((listenfd = socket(AF_INET6, SOCK_STREAM, 0)) < 0){ // creating listening socket
         syslog(LOG_ERR, "socket() error: %s", strerror(errno));
         exit(1);
     }
@@ -181,23 +183,26 @@ void run(void) {
     servaddr.sin6_addr = in6addr_any;
     servaddr.sin6_port = htons(LISTEN_PORT_FTP);
 
-    if(bind(listenfd, (struct sockaddr*) &servaddr, sizeof(servaddr)) < 0){
+    if(bind(listenfd, (struct sockaddr*) &servaddr, sizeof(servaddr)) < 0){ // binding listening socket, port 2025, ADDR_ANY
         syslog(LOG_ERR, "socket() error: %s", strerror(errno));
         exit(1);
     }
 
-    if(listen(listenfd, LISTENQ) < 0){
+    if(listen(listenfd, LISTENQ) < 0){ // listen 
         syslog(LOG_ERR, "socket() error: %s", strerror(errno));
         exit(1);
     }
 
     char time_str[TIME_BUFF_SIZE] = {0};
     get_time(time_str, TIME_BUFF_SIZE);
-    syslog(LOG_INFO, "%s: %s\n", time_str, "System ready, waiting for clients...");
+    syslog(LOG_INFO, "%s: %s\n", time_str, "System ready, waiting for clients..."); // LOGGING FOR ADMINISTRATOR 
 
     while(1){
+
+        //  ===CONCURRENCY USING FORK()===
+
         size = sizeof(cliaddr);
-        if((connfd = accept(listenfd, (struct sockaddr*) &cliaddr, &size)) < 0){
+        if((connfd = accept(listenfd, (struct sockaddr*) &cliaddr, &size)) < 0){ // accept client calls
             syslog(LOG_ERR, "socket() error: %s", strerror(errno));
             continue;
         }
@@ -208,13 +213,13 @@ void run(void) {
             close(connfd);
             continue;
         } 
-        else if (pid == 0){ 
+        else if (pid == 0){  // if child
             close(listenfd); 
             handle_client(connfd, &cliaddr);
             close(connfd);
             exit(0);
         } 
-        else{ 
+        else{ // if parent
             close(connfd);
         }
     }

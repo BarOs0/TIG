@@ -20,7 +20,7 @@ void print_file(int sockfd){
 
     while(bytes_left > 0){ // reading all bytes from file from peer
         bytes_to_read = (bytes_left > BUFF_SIZE) ? BUFF_SIZE : bytes_left;
-        bytes_read = read(sockfd, buff, bytes_to_read);
+        bytes_read = read(sockfd, buff, bytes_to_read); // read data to the file data buffer
         if(bytes_read == 0) break;
         if(bytes_read < 0){
             perror("print_file read() file error");
@@ -28,7 +28,7 @@ void print_file(int sockfd){
         }
         buff[bytes_read] = '\0'; // null-terminate for printf (bezpiecznie)
         printf("%.*s", (int)bytes_read, buff); // print as string even with nulls
-        bytes_left -= bytes_read;
+        bytes_left -= bytes_read; // decrement bytes_left
     }
-    fflush(stdout);
+    fflush(stdout); // throw all through stdout
 }

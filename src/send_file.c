@@ -9,9 +9,7 @@
 
 void send_file(int sockfd, const char* filepath){
 
-    /*
-        ====SENDING FILE SIZE====
-    */
+    //  ====SENDING FILE SIZE====
 
     struct stat st; // structure with statistics of file
     if (stat(filepath, &st) < 0){
@@ -27,9 +25,7 @@ void send_file(int sockfd, const char* filepath){
         return;
     }
 
-    /*
-        ====SENDING FILE====
-    */
+    //  ===SENDING FILE DATA===
 
     int filefd;
 
@@ -41,7 +37,7 @@ void send_file(int sockfd, const char* filepath){
     char buff[BUFF_SIZE];
     ssize_t bytes_read, bytes_sent;
 
-    while((bytes_read = read(filefd, buff, BUFF_SIZE)) > 0){ // reading this file
+    while((bytes_read = read(filefd, buff, BUFF_SIZE)) > 0){ // reading file
         ssize_t total_bytes_sent = 0; // sent bytes counter
         while(total_bytes_sent < bytes_read){ // if whole file is sent stop sending
             if((bytes_sent = write(sockfd, (buff + total_bytes_sent), (bytes_read - total_bytes_sent))) < 0){ // keep sending bytes
@@ -53,7 +49,7 @@ void send_file(int sockfd, const char* filepath){
                 perror("send_file.c write() file error");
                 return;
             }
-            total_bytes_sent += bytes_sent; // increment
+            total_bytes_sent += bytes_sent; // increment total bytes sent
         }
     }
     close(filefd);
