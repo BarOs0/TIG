@@ -7,8 +7,10 @@
 #include <arpa/inet.h>
 #include <sys/time.h>
 #include <fcntl.h>
+#include <ifaddrs.h>
+#include <net/if.h>
 
-void mcast_discover(void){
+int mcast_discover(void){
 
     int sockfd, n;
     struct sockaddr_in6 mcastaddr, servaddr;
@@ -17,19 +19,65 @@ void mcast_discover(void){
     bzero(&servaddr, sizeof(servaddr));
     socklen_t len = sizeof(servaddr);
 
-    char buff[BUFF_SIZE] = {0};
+    char msg[MSG_SIZE] = {0};
     char srvaddrstr[INET6_ADDRSTRLEN] = {0};
 
     if((sockfd = socket(AF_INET6, SOCK_DGRAM,0)) < 0){
         fprintf(stderr, "mcast_discover.c socket() error: %s\n", strerror(errno));
-        return;
+        return -1;
     }
 
-    int ifindex = 0;
+    struct ifaddrs *ifaddr, *ifa;
+    struct sockaddr_in6 *sin6 = NULL;
+    char addrstr[INET6_ADDRSTRLEN];
+
+    if (getifaddrs(&ifaddr) == -1) {
+        fprintf(stderr, "getifaddrs() error: %s\n", strerror(errno));
+        close(sockfd);
+        return -1;
+    }
+
+    // === looking for first global - link addr ===
+
+    int found = 0;
+    for (ifa = ifaddr; ifa != NULL; ifa = ifa->ifa_next) {
+        if (ifa->ifa_addr && ifa->ifa_addr->sa_family == AF_INET6 && strcmp(ifa->ifa_name, MCAST_IF) == 0) {
+            sin6 = (struct sockaddr_in6 *)ifa->ifa_addr;
+            if (!IN6_IS_ADDR_LINKLOCAL(&sin6->sin6_addr)) {
+                found = 1;
+                break;
+            }
+        }
+    }
+
+    // === bind() to first global - link addr ===
+
+    if (found) {
+        struct sockaddr_in6 localaddr;
+        bzero(&localaddr, sizeof(localaddr));
+        localaddr.sin6_family = AF_INET6;
+        localaddr.sin6_addr = sin6->sin6_addr;
+        localaddr.sin6_port = 0;
+        if (bind(sockfd, (struct sockaddr*)&localaddr, sizeof(localaddr)) < 0) {
+            fprintf(stderr, "mcast_discover.c bind() error: %s\n", strerror(errno));
+            freeifaddrs(ifaddr);
+            close(sockfd);
+            return -1;
+        }
+    }
+    freeifaddrs(ifaddr);
+
+    int ifindex;
+    if((ifindex = if_nametoindex(MCAST_IF)) == 0){
+        fprintf(stderr, "mcast_discover.c interface: %s unreachable\n", MCAST_IF);
+        close(sockfd);
+        return -1;
+    }
+
     if(setsockopt(sockfd, IPPROTO_IPV6, IPV6_MULTICAST_IF, &ifindex, sizeof(ifindex)) < 0){
         fprintf(stderr, "mcast_discover.c setsockopt(ifindex) error: %s\n", strerror(errno));
         close(sockfd);
-        return;
+        return -1;
     }
 
     mcastaddr.sin6_family = AF_INET6;
@@ -38,13 +86,13 @@ void mcast_discover(void){
     if(inet_pton(AF_INET6, MCAST_ADDR, &mcastaddr.sin6_addr) < 0){
         fprintf(stderr, "mcast_discover.c inet_pton() error: %s\n", strerror(errno));
         close(sockfd);
-        return;
+        return -1;
     }
 
     if(sendto(sockfd, DISCOVER_MSG, strlen(DISCOVER_MSG), 0, (struct sockaddr*) &mcastaddr, sizeof(mcastaddr)) < 0){
         fprintf(stderr, "mcast_discover.c sendto() error: %s\n", strerror(errno));
         close(sockfd);
-        return;
+        return -1;
     }
 
     // socket delay
@@ -54,19 +102,21 @@ void mcast_discover(void){
     if(setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(tv)) < 0){
         fprintf(stderr, "mcast_discover.c setsockopt(tv) error: %s\n", strerror(errno));
         close(sockfd);
-        return;
+        return -1;
     }
 
     while(1){
-        if((n = recvfrom(sockfd, buff, (BUFF_SIZE - 1), 0, (struct sockaddr*) &servaddr, &len)) < 0){
+        if((n = recvfrom(sockfd, msg, (MSG_SIZE - 1), 0, (struct sockaddr*) &servaddr, &len)) < 0){
             fprintf(stderr, "mcast_discover.c recvfrom() error: %s\n", strerror(errno));
             break;
         }
-        buff[n] = '\0';
-        if(strcmp(buff, RESPONSE_MSG) == 0){
+        msg[n] = '\0';
+        if(strcmp(msg, RESPONSE_MSG) == 0){
             inet_ntop(AF_INET6, &servaddr.sin6_addr, srvaddrstr, INET6_ADDRSTRLEN);
             printf("Server: [%s]:%d discovered\n", srvaddrstr, ntohs(servaddr.sin6_port));
         }
     }
     close(sockfd);
+
+    return 0;
 }

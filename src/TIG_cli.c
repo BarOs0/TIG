@@ -2,6 +2,7 @@
 #include "recv_directory.h"
 #include "send_directory.h"
 #include "print_file.h"
+#include "mcast_discover.h"
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netdb.h>

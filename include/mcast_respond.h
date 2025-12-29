@@ -5,8 +5,9 @@
 #define MCAST_PORT 2026
 #define DISCOVER_MSG "TIG_DISCOVERY"
 #define RESPONSE_MSG "TIG_RESPONSE"
-#define BUFF_SIZE 64
+#define MSG_SIZE 64
+#define MCAST_IF "br-50ca92fdda97"
 
-void mcast_respond(void);
+void* mcast_respond(void* arg);
 
 #endif // MCAST_RESPOND
