@@ -7,7 +7,6 @@
 #include <arpa/inet.h>
 #include <sys/time.h>
 #include <fcntl.h>
-#include <ifaddrs.h>
 #include <net/if.h>
 
 int mcast_discover(void){
@@ -26,46 +25,6 @@ int mcast_discover(void){
         fprintf(stderr, "mcast_discover.c socket() error: %s\n", strerror(errno));
         return -1;
     }
-
-    struct ifaddrs *ifaddr, *ifa;
-    struct sockaddr_in6 *sin6 = NULL;
-    char addrstr[INET6_ADDRSTRLEN];
-
-    if (getifaddrs(&ifaddr) == -1) {
-        fprintf(stderr, "getifaddrs() error: %s\n", strerror(errno));
-        close(sockfd);
-        return -1;
-    }
-
-    // === looking for first global - link addr ===
-
-    int found = 0;
-    for (ifa = ifaddr; ifa != NULL; ifa = ifa->ifa_next) {
-        if (ifa->ifa_addr && ifa->ifa_addr->sa_family == AF_INET6 && strcmp(ifa->ifa_name, MCAST_IF) == 0) {
-            sin6 = (struct sockaddr_in6 *)ifa->ifa_addr;
-            if (!IN6_IS_ADDR_LINKLOCAL(&sin6->sin6_addr)) {
-                found = 1;
-                break;
-            }
-        }
-    }
-
-    // === bind() to first global - link addr ===
-
-    if (found) {
-        struct sockaddr_in6 localaddr;
-        bzero(&localaddr, sizeof(localaddr));
-        localaddr.sin6_family = AF_INET6;
-        localaddr.sin6_addr = sin6->sin6_addr;
-        localaddr.sin6_port = 0;
-        if (bind(sockfd, (struct sockaddr*)&localaddr, sizeof(localaddr)) < 0) {
-            fprintf(stderr, "mcast_discover.c bind() error: %s\n", strerror(errno));
-            freeifaddrs(ifaddr);
-            close(sockfd);
-            return -1;
-        }
-    }
-    freeifaddrs(ifaddr);
 
     int ifindex;
     if((ifindex = if_nametoindex(MCAST_IF)) == 0){

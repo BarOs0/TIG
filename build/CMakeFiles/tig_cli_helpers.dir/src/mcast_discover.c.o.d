@@ -83,5 +83,4 @@ CMakeFiles/tig_cli_helpers.dir/src/mcast_discover.c.o: \
  /usr/include/x86_64-linux-gnu/bits/fcntl.h \
  /usr/include/x86_64-linux-gnu/bits/fcntl-linux.h \
  /usr/include/x86_64-linux-gnu/bits/stat.h \
- /usr/include/x86_64-linux-gnu/bits/struct_stat.h /usr/include/ifaddrs.h \
- /usr/include/net/if.h
+ /usr/include/x86_64-linux-gnu/bits/struct_stat.h /usr/include/net/if.h
