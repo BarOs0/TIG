@@ -5,7 +5,6 @@
 #include "send_file.h"
 #include "get_time.h"
 #include "copy_directory.h"
-#include "mcast_respond.h"
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/stat.h>
@@ -20,13 +19,11 @@
 #include <unistd.h>
 #include <syslog.h>
 #include <limits.h>
-#include <pthread.h>
-#include <sys/epoll.h>
+#include <sys/wait.h>
 
 void handle_client(int connfd, struct sockaddr_in6 *cliaddr) {
     char cmd;
     char commit_buff[COMMIT_BUFF_SIZE] = {0};
-    char repos_buff[REPOS_BUFF_SIZE] = {0};
     char path_buff[PATH_MAX] = {0};
     char path_buff_2[PATH_MAX] = {0};
     char name_buff[NAME_BUFF_SIZE] = {0};
@@ -156,14 +153,24 @@ void handle_client(int connfd, struct sockaddr_in6 *cliaddr) {
     }
 }
 
+void sigchld_handler(int signo){
+    (void)signo;
+    while (waitpid(-1, NULL, WNOHANG) > 0);
+}
+
 void run(void) {
-    int listenfd, epollfd;
-    struct sockaddr_in6 servaddr;
-    struct epoll_event ev, events[MAX_EVENTS];
+    int listenfd, connfd;
+    struct sockaddr_in6 servaddr, cliaddr;
     socklen_t size;
-    int connfd;
 
     bzero(&servaddr, sizeof(servaddr));
+    bzero(&cliaddr, sizeof(cliaddr));
+
+    struct sigaction sa;
+    sa.sa_handler = sigchld_handler;
+    sigemptyset(&sa.sa_mask);
+    sa.sa_flags = SA_RESTART;
+    sigaction(SIGCHLD, &sa, NULL);
 
     if((listenfd = socket(AF_INET6, SOCK_STREAM, 0)) < 0){
         syslog(LOG_ERR, "socket() error: %s", strerror(errno));
@@ -188,45 +195,27 @@ void run(void) {
     get_time(time_str, TIME_BUFF_SIZE);
     syslog(LOG_INFO, "%s: %s\n", time_str, "System ready, waiting for clients...");
 
-    fcntl(listenfd, F_SETFL, O_NONBLOCK);
-
-    epollfd = epoll_create1(0);
-    if(epollfd < 0){
-        syslog(LOG_ERR, "epoll_create1() error: %s", strerror(errno));
-        exit(1);
-    }
-
-    ev.events = EPOLLIN;
-    ev.data.fd = listenfd;
-    epoll_ctl(epollfd, EPOLL_CTL_ADD, listenfd, &ev);
-
     while(1){
-        int nfds = epoll_wait(epollfd, events, MAX_EVENTS, -1);
-        for(int i = 0; i < nfds; ++i){
-            if(events[i].data.fd == listenfd){
-                struct sockaddr_in6 cliaddr;
-                bzero(&cliaddr, sizeof(cliaddr));
-                size = sizeof(cliaddr);
-
-                if((connfd = accept(listenfd, (struct sockaddr*)&cliaddr, &size)) < 0){
-                    continue;
-                }
-
-                fcntl(connfd, F_SETFL, O_NONBLOCK);
-                ev.events = EPOLLIN;
-                ev.data.fd = connfd;
-                epoll_ctl(epollfd, EPOLL_CTL_ADD, connfd, &ev);
-            } else {
-
-                struct sockaddr_in6 cliaddr;
-                bzero(&cliaddr, sizeof(cliaddr));
-                size = sizeof(cliaddr);
-
-                handle_client(events[i].data.fd, &cliaddr);
-
-                close(events[i].data.fd);
-                epoll_ctl(epollfd, EPOLL_CTL_DEL, events[i].data.fd, NULL);
-            }
+        size = sizeof(cliaddr);
+        if((connfd = accept(listenfd, (struct sockaddr*) &cliaddr, &size)) < 0){
+            syslog(LOG_ERR, "socket() error: %s", strerror(errno));
+            continue;
+        }
+        
+        pid_t pid = fork();
+        if (pid < 0){
+            syslog(LOG_ERR, "fork() error: %s", strerror(errno));
+            close(connfd);
+            continue;
+        } 
+        else if (pid == 0){ 
+            close(listenfd); 
+            handle_client(connfd, &cliaddr);
+            close(connfd);
+            exit(0);
+        } 
+        else{ 
+            close(connfd);
         }
     }
 }
@@ -234,8 +223,6 @@ void run(void) {
 int main(int argc, char** argv){
     daemon_init("TIG_srv", LOG_DAEMON, getuid());
     openlog("TIG_srv", LOG_PID, LOG_DAEMON);
-    pthread_t mcast_respond_thread;
-    pthread_create(&mcast_respond_thread, NULL, mcast_respond, NULL);
     run();
     return 0;
 }

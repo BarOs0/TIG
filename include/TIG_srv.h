@@ -3,16 +3,15 @@
 
 #include <netinet/in.h>
 
-#define LISTENQ 2
-#define MAX_EVENTS 32
-#define LISTEN_PORT_FTP 2025
-#define COMMIT_BUFF_SIZE 64
-#define REPOS_BUFF_SIZE 1024
-#define NAME_BUFF_SIZE 32
-#define TIME_BUFF_SIZE 64
-#define REPOS_PATH "/home/bartek/PS2025/projekt/srv/data"
+#define LISTENQ 2 // Clients queue for listen()
+#define LISTEN_PORT_FTP 2025 // Listening port
+#define COMMIT_BUFF_SIZE 64 // Commit message buffer
+#define NAME_BUFF_SIZE 32 // File or directory name buffer
+#define TIME_BUFF_SIZE 64 // Time stamp buffer
+#define REPOS_PATH "/home/bartek/PS2025/projekt/srv/data" // Server data directory path (user configurable)
 
-void run(void);
-void handle_client(int connfd, struct sockaddr_in6 *cliaddr);
+void run(void); // Main server initialization function
+void handle_client(int connfd, struct sockaddr_in6 *cliaddr); // Client handle function
+void sigchld_handler(int signo); // SIGCHLD handler
 
 #endif // TIG_SRV_H

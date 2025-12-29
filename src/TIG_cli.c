@@ -2,7 +2,6 @@
 #include "recv_directory.h"
 #include "send_directory.h"
 #include "print_file.h"
-#include "mcast_discover.h"
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netdb.h>
@@ -11,7 +10,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <limits.h>
 
 int connection(const char* opt, const char* repo_name, const char* commit) {
     int n = 0, sockfd = 0;
@@ -20,7 +18,6 @@ int connection(const char* opt, const char* repo_name, const char* commit) {
     const char *server_name = SERVER_NAME;
     char cmd;
     char commit_buff[COMMIT_BUFF_SIZE] = {0};
-    char repos_buff[REPOS_BUFF_SIZE] = {0};
     char name_buff[NAME_BUFF_SIZE] = {0};
 
     memset(&hints, 0, sizeof(hints));
@@ -130,14 +127,8 @@ int connection(const char* opt, const char* repo_name, const char* commit) {
 }
 
 int main(int argc, char **argv){
-
-    
-
     if((argc == 2) && (strcmp(argv[1], "repos") == 0)){
         return connection(argv[1], NULL, NULL);
-    }
-    else if((argc == 2) && (strcmp(argv[1], "discover") == 0)){
-        return mcast_discover();
     }
     else if(argc == 3 && (strcmp(argv[1], "pull") == 0 || strcmp(argv[1], "push") == 0)){
         return connection(argv[1], argv[2], NULL);
@@ -146,7 +137,7 @@ int main(int argc, char **argv){
         return connection(argv[1], argv[2], argv[3]);
     }
     else{
-        fprintf(stderr, "ERROR: usage: ./TIG_cli <repos/discover> or ./TIG_cli <commit> <repo name> <message> or ./TIG_cli <pull/push> <repo name>\n");
+        fprintf(stderr, "ERROR: usage: ./TIG_cli <repos> or ./TIG_cli <commit> <repo name> <message> or ./TIG_cli <pull/push> <repo name>\n");
     }
     
     return 0;

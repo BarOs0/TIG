@@ -3,7 +3,6 @@
 
 CMakeFiles/TIG_cli.dir/src/TIG_cli.c.o: /home/bartek/PS2025/projekt/src/TIG_cli.c \
   /home/bartek/PS2025/projekt/include/TIG_cli.h \
-  /home/bartek/PS2025/projekt/include/mcast_discover.h \
   /home/bartek/PS2025/projekt/include/print_file.h \
   /home/bartek/PS2025/projekt/include/recv_directory.h \
   /home/bartek/PS2025/projekt/include/send_directory.h \
@@ -172,6 +171,10 @@ CMakeFiles/TIG_cli.dir/src/TIG_cli.c.o: /home/bartek/PS2025/projekt/src/TIG_cli.
 
 /usr/include/x86_64-linux-gnu/bits/select.h:
 
+/usr/include/strings.h:
+
+/usr/include/x86_64-linux-gnu/bits/floatn-common.h:
+
 /usr/include/x86_64-linux-gnu/bits/typesizes.h:
 
 /usr/include/asm-generic/posix_types.h:
@@ -198,19 +201,7 @@ CMakeFiles/TIG_cli.dir/src/TIG_cli.c.o: /home/bartek/PS2025/projekt/src/TIG_cli.
 
 /usr/include/rpc/netdb.h:
 
-/usr/include/x86_64-linux-gnu/bits/pthreadtypes.h:
-
-/usr/include/limits.h:
-
 /usr/include/x86_64-linux-gnu/bits/posix2_lim.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/timer_t.h:
-
-/usr/include/endian.h:
-
-/usr/include/x86_64-linux-gnu/bits/endianness.h:
-
-/home/bartek/PS2025/projekt/src/TIG_cli.c:
 
 /usr/include/linux/stddef.h:
 
@@ -218,11 +209,7 @@ CMakeFiles/TIG_cli.dir/src/TIG_cli.c.o: /home/bartek/PS2025/projekt/src/TIG_cli.
 
 /usr/include/netdb.h:
 
-/home/bartek/PS2025/projekt/include/mcast_discover.h:
-
-/usr/include/strings.h:
-
-/usr/include/x86_64-linux-gnu/bits/floatn-common.h:
+/home/bartek/PS2025/projekt/src/TIG_cli.c:
 
 /usr/include/features.h:
 
@@ -244,6 +231,12 @@ CMakeFiles/TIG_cli.dir/src/TIG_cli.c.o: /home/bartek/PS2025/projekt/src/TIG_cli.
 
 /usr/include/asm-generic/errno.h:
 
+/usr/include/x86_64-linux-gnu/bits/types/timer_t.h:
+
+/usr/include/endian.h:
+
+/usr/include/x86_64-linux-gnu/bits/endianness.h:
+
 /usr/include/unistd.h:
 
 /usr/include/x86_64-linux-gnu/bits/sockaddr.h:
@@ -261,6 +254,10 @@ CMakeFiles/TIG_cli.dir/src/TIG_cli.c.o: /home/bartek/PS2025/projekt/src/TIG_cli.
 /home/bartek/PS2025/projekt/include/print_file.h:
 
 /usr/include/x86_64-linux-gnu/asm/posix_types.h:
+
+/usr/include/limits.h:
+
+/usr/include/x86_64-linux-gnu/bits/pthreadtypes.h:
 
 /usr/include/x86_64-linux-gnu/asm/posix_types_64.h:
 

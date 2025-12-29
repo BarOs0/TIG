@@ -1,9 +1,11 @@
 #ifndef SEND_FILE_H
 #define SEND_FILE_H
 
-#include <sys/types.h>
+/*send_directory() helper, file sending function*/
 
-#define BUFF_SIZE 1024
+#include <sys/types.h> 
+
+#define BUFF_SIZE 1024 // File data buffer
 
 void send_file(int sockfd, const char *filepath);
 
