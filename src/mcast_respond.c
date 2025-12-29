@@ -14,13 +14,13 @@ void* mcast_respond(void* arg){
     char msg[MSG_SIZE];
     socklen_t cli_len = sizeof(cli_addr);
 
-    if ((sockfd = socket(AF_INET6, SOCK_DGRAM, 0)) < 0){
+    if ((sockfd = socket(AF_INET6, SOCK_DGRAM, 0)) < 0){ // Creating UDP socket to respond mcast discovery
         syslog(LOG_ERR, "mcast_responder.c socket() error: %s", strerror(errno));
         pthread_exit(NULL);
     }
 
     int on = 1;
-    if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &on, sizeof(on)) < 0){
+    if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &on, sizeof(on)) < 0){ // REUSEADDR on 
         syslog(LOG_ERR, "mcast_responder.c setsockopt(REUSEADDR) error: %s", strerror(errno));
         close(sockfd);
         pthread_exit(NULL);
@@ -31,44 +31,44 @@ void* mcast_respond(void* arg){
     mcast_addr.sin6_addr = in6addr_any;
     mcast_addr.sin6_port = htons(MCAST_PORT);
 
-    if (bind(sockfd, (struct sockaddr*)&mcast_addr, sizeof(mcast_addr)) < 0){
+    if (bind(sockfd, (struct sockaddr*)&mcast_addr, sizeof(mcast_addr)) < 0){ // bind to the mcast port (default 2026)
         syslog(LOG_ERR, "mcast_responder.c bind() error: %s", strerror(errno));
         close(sockfd);
         pthread_exit(NULL);
     }
 
-    syslog(LOG_INFO, "mcast_responder.c waiting for discovery MSG on: %s\n", MCAST_IF);
+    syslog(LOG_INFO, "mcast_responder.c waiting for discovery MSG on: %s\n", MCAST_IF); // LOGGING FOR ADMINISTRATOR
 
-    struct ipv6_mreq mreq;
+    struct ipv6_mreq mreq; // prepare IPv6 mreq structure for multicast
     if (inet_pton(AF_INET6, MCAST_ADDR, &mreq.ipv6mr_multiaddr) != 1){
         syslog(LOG_ERR, "mcast_responder.c inet_pton() error");
         close(sockfd);
         pthread_exit(NULL);
     }
 
-    mreq.ipv6mr_interface = if_nametoindex(MCAST_IF);
+    mreq.ipv6mr_interface = if_nametoindex(MCAST_IF); // Get interface index
     if(mreq.ipv6mr_interface == 0){
         syslog(LOG_ERR, "mcast_responder.c interface %s unreachable", MCAST_IF);
         close(sockfd);
         pthread_exit(NULL);
     }
 
-    if (setsockopt(sockfd, IPPROTO_IPV6, IPV6_JOIN_GROUP, &mreq, sizeof(mreq)) < 0){
+    if (setsockopt(sockfd, IPPROTO_IPV6, IPV6_JOIN_GROUP, &mreq, sizeof(mreq)) < 0){ // Join mcast group with ff02::2026
         syslog(LOG_ERR, "mcast_responder.c setsockopt(IPV6_JOIN_GROUP) error: %s", strerror(errno));
         close(sockfd);
         pthread_exit(NULL);
     }
 
     while (1){
-        int n = recvfrom(sockfd, msg, (MSG_SIZE - 1), 0, (struct sockaddr*)&cli_addr, &cli_len);
+        int n = recvfrom(sockfd, msg, (MSG_SIZE - 1), 0, (struct sockaddr*)&cli_addr, &cli_len); // Receive discovery message
         if (n < 0){
             syslog(LOG_ERR, "mcast_responder.c recvfrom() error: %s", strerror(errno));
             continue;
         }
         msg[n] = '\0';
-        syslog(LOG_INFO, "mcast_respond.c recieved discovery MSG: %s\n", msg);
+        syslog(LOG_INFO, "mcast_respond.c recieved discovery MSG: %s\n", msg); // LOGGING FOR ADMINISTRATOR
         if (strcmp(msg, DISCOVER_MSG) == 0){
-            sendto(sockfd, RESPONSE_MSG, strlen(RESPONSE_MSG), 0, (struct sockaddr*)&cli_addr, cli_len);
+            sendto(sockfd, RESPONSE_MSG, strlen(RESPONSE_MSG), 0, (struct sockaddr*)&cli_addr, cli_len); // Send mcast discovery response (client will receive IPv6 via recvfrom)
             syslog(LOG_INFO, "mcast_respond.c sent discovery response: %s\n", RESPONSE_MSG);
         }
     }
