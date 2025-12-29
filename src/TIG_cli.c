@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <limits.h>
 
 int connection(const char* opt, const char* repo_name, const char* commit) {
     int n = 0, sockfd = 0;

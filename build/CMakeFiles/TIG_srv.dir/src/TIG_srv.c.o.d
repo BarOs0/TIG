@@ -52,22 +52,17 @@ CMakeFiles/TIG_srv.dir/src/TIG_srv.c.o: \
  /usr/include/asm-generic/sockios.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_osockaddr.h \
  /usr/include/x86_64-linux-gnu/bits/in.h \
- /home/bartek/PS2025/projekt/include/daemon.h /usr/include/syslog.h \
- /usr/include/x86_64-linux-gnu/sys/syslog.h \
- /usr/lib/gcc/x86_64-linux-gnu/13/include/stdarg.h \
- /usr/include/x86_64-linux-gnu/bits/syslog-path.h \
- /usr/include/x86_64-linux-gnu/bits/floatn.h \
- /usr/include/x86_64-linux-gnu/bits/floatn-common.h /usr/include/unistd.h \
+ /home/bartek/PS2025/projekt/include/daemon.h \
+ /home/bartek/PS2025/projekt/include/recv_directory.h \
+ /home/bartek/PS2025/projekt/include/send_directory.h \
+ /home/bartek/PS2025/projekt/include/send_file.h \
+ /home/bartek/PS2025/projekt/include/get_time.h /usr/include/unistd.h \
  /usr/include/x86_64-linux-gnu/bits/posix_opt.h \
  /usr/include/x86_64-linux-gnu/bits/environments.h \
  /usr/include/x86_64-linux-gnu/bits/confname.h \
  /usr/include/x86_64-linux-gnu/bits/getopt_posix.h \
  /usr/include/x86_64-linux-gnu/bits/getopt_core.h \
  /usr/include/x86_64-linux-gnu/bits/unistd_ext.h \
- /home/bartek/PS2025/projekt/include/recv_directory.h \
- /home/bartek/PS2025/projekt/include/send_directory.h \
- /home/bartek/PS2025/projekt/include/send_file.h \
- /home/bartek/PS2025/projekt/include/get_time.h \
  /home/bartek/PS2025/projekt/include/copy_directory.h \
  /home/bartek/PS2025/projekt/include/mcast_respond.h \
  /usr/include/x86_64-linux-gnu/sys/stat.h \
@@ -102,6 +97,7 @@ CMakeFiles/TIG_srv.dir/src/TIG_srv.c.o: \
  /usr/include/x86_64-linux-gnu/bits/sigthread.h \
  /usr/include/x86_64-linux-gnu/bits/signal_ext.h /usr/include/stdio.h \
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/stdarg.h \
  /usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h \
  /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h \
  /usr/include/x86_64-linux-gnu/bits/types/__fpos64_t.h \
@@ -109,13 +105,18 @@ CMakeFiles/TIG_srv.dir/src/TIG_srv.c.o: \
  /usr/include/x86_64-linux-gnu/bits/types/FILE.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h \
  /usr/include/x86_64-linux-gnu/bits/types/cookie_io_functions_t.h \
- /usr/include/x86_64-linux-gnu/bits/stdio_lim.h /usr/include/stdlib.h \
+ /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
+ /usr/include/x86_64-linux-gnu/bits/floatn.h \
+ /usr/include/x86_64-linux-gnu/bits/floatn-common.h /usr/include/stdlib.h \
  /usr/include/x86_64-linux-gnu/bits/waitflags.h \
  /usr/include/x86_64-linux-gnu/bits/waitstatus.h /usr/include/alloca.h \
  /usr/include/x86_64-linux-gnu/bits/stdlib-float.h /usr/include/string.h \
  /usr/include/x86_64-linux-gnu/bits/types/locale_t.h \
  /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h \
- /usr/include/strings.h /usr/lib/gcc/x86_64-linux-gnu/13/include/limits.h \
+ /usr/include/strings.h /usr/include/syslog.h \
+ /usr/include/x86_64-linux-gnu/sys/syslog.h \
+ /usr/include/x86_64-linux-gnu/bits/syslog-path.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/limits.h \
  /usr/lib/gcc/x86_64-linux-gnu/13/include/syslimits.h \
  /usr/include/limits.h /usr/include/x86_64-linux-gnu/bits/posix1_lim.h \
  /usr/include/x86_64-linux-gnu/bits/local_lim.h \

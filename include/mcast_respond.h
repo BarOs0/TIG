@@ -6,7 +6,7 @@
 #define DISCOVER_MSG "TIG_DISCOVERY"
 #define RESPONSE_MSG "TIG_RESPONSE"
 #define MSG_SIZE 64
-#define MCAST_IF "br-50ca92fdda97"
+#define MCAST_IF "wlp2s0"
 
 void* mcast_respond(void* arg);
 

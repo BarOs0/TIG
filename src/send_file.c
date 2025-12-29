@@ -1,5 +1,4 @@
 #include "send_file.h"
-#include <dirent.h>
 #include <sys/stat.h>
 #include <string.h>
 #include <stdio.h>

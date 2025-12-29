@@ -1,8 +1,6 @@
 #ifndef TIG_CLI_H
 #define TIG_CLI_H
 
-#include <limits.h>
-
 #define LISTEN_PORT 2025
 #define SERVER_NAME "TIG_srv"
 #define COMMIT_BUFF_SIZE 64

@@ -2,8 +2,6 @@
 #define DAEMON_H
 
 #include <sys/types.h>
-#include <syslog.h>
-#include <unistd.h>
 
 int daemon_init(const char *pname, int facility, uid_t uid);
 

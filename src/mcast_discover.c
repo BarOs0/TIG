@@ -26,6 +26,9 @@ int mcast_discover(void){
         return -1;
     }
 
+    unsigned int loop = 1;
+    setsockopt(sockfd, IPPROTO_IPV6, IPV6_MULTICAST_LOOP, &loop, sizeof(loop));
+
     int ifindex;
     if((ifindex = if_nametoindex(MCAST_IF)) == 0){
         fprintf(stderr, "mcast_discover.c interface: %s unreachable\n", MCAST_IF);

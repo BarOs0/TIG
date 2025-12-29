@@ -1,6 +1,5 @@
 #include "get_time.h"
 #include <time.h>
-#include <sys/time.h>
 
 void get_time(char* time_buff, size_t size){
     time_t now = time(NULL);

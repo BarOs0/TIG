@@ -7,7 +7,7 @@
 #define RESPONSE_MSG "TIG_RESPONSE"
 #define TIMEOUT 3 // seconds
 #define MSG_SIZE 64
-#define MCAST_IF "eth1"
+#define MCAST_IF "wlp2s0"
 
 int mcast_discover(void);
 

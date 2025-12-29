@@ -15,7 +15,6 @@ CMakeFiles/tig_cli_helpers.dir/src/mcast_discover.c.o: /home/bartek/PS2025/proje
   /usr/include/fcntl.h \
   /usr/include/features-time64.h \
   /usr/include/features.h \
-  /usr/include/ifaddrs.h \
   /usr/include/linux/errno.h \
   /usr/include/linux/posix_types.h \
   /usr/include/linux/stddef.h \
@@ -225,10 +224,6 @@ CMakeFiles/tig_cli_helpers.dir/src/print_file.c.o: /home/bartek/PS2025/projekt/s
 
 /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h:
 
-/usr/lib/gcc/x86_64-linux-gnu/13/include/stdarg.h:
-
-/usr/include/x86_64-linux-gnu/bits/struct_rwlock.h:
-
 /usr/include/unistd.h:
 
 /usr/include/x86_64-linux-gnu/bits/struct_stat.h:
@@ -266,8 +261,6 @@ CMakeFiles/tig_cli_helpers.dir/src/print_file.c.o: /home/bartek/PS2025/projekt/s
 /usr/include/x86_64-linux-gnu/bits/stdint-intn.h:
 
 /usr/include/features.h:
-
-/usr/include/ifaddrs.h:
 
 /usr/include/x86_64-linux-gnu/gnu/stubs.h:
 
@@ -374,3 +367,7 @@ CMakeFiles/tig_cli_helpers.dir/src/print_file.c.o: /home/bartek/PS2025/projekt/s
 /usr/include/net/if.h:
 
 /usr/include/x86_64-linux-gnu/bits/struct_mutex.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/stdarg.h:
+
+/usr/include/x86_64-linux-gnu/bits/struct_rwlock.h:
