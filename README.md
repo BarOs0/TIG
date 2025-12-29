@@ -19,8 +19,7 @@ The administrator must supervise the data from srv/data, e.g. deleting dead repo
 - `srv/data/backups` — repository version from last push
 - `srv/data/commits` — a directory of time-stamped commits
 - `srv/data/repos` — directory with the latest repositories
-- `srv/data/list` — list of repositories
-
+- `srv/data/list` — list of repositories / this file appears after first push 
 
 ## Build Instructions
 ```sh
