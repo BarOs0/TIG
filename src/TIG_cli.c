@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <mcast_discover.h>
 
 int connection(const char* opt, const char* repo_name, const char* commit) {
     int n = 0, sockfd = 0;
@@ -151,7 +152,10 @@ int main(int argc, char **argv){
 
     //  ===ARGUMENTS MANAGEMENT===
 
-    if((argc == 2) && (strcmp(argv[1], "repos") == 0)){
+    if((argc == 2) && (strcmp(argv[1], "discover") == 0)){
+        return mcast_discover();
+    }
+    else if((argc == 2) && (strcmp(argv[1], "repos") == 0)){
         return connection(argv[1], NULL, NULL);
     }
     else if(argc == 3 && (strcmp(argv[1], "pull") == 0 || strcmp(argv[1], "push") == 0)){

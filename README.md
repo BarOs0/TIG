@@ -36,10 +36,14 @@ The executables `TIG_cli` (client) and `TIG_srv` (server) will appear in the `bu
 
 ### Useful commands for administrator
 ```sh
-sudo ip6tables -I INPUT -p tcp --dport 2025 -j ACCEPT //Disable firewall on 2025 port
+sudo ip6tables -I INPUT -p tcp --dport 2025 -j ACCEPT //Disable firewall on 2025 port on TCP
+sudo ip6tables -I INPUT -p udp --dport 2026 -j ACCEPT //Disable firewall on 2026 port on UDP
+sudo ip6tables -D INPUT -p tcp --dport 2025 -j ACCEPT //Enable firewall on 2025 port on TCP
+sudo ip6tables -D INPUT -p udp --dport 2026 -j ACCEPT //Enable firewall on 2026 port on UDP
 sudo grep TIG_srv /var/log/syslog //Check syslog logs for TIG_srv
 sudo truncate -s 0 /var/log/syslog //Reset syslog logs for TIG_srv
 sudo ps aux | grep TIG_srv //Check TIG_srv daemon PID
+sudo kill -9 <daemon PID> //Terminate daemon process
 ```
 
 ### Hints for user

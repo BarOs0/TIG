@@ -5,6 +5,7 @@
 #include "send_file.h"
 #include "get_time.h"
 #include "copy_directory.h"
+#include "mcast_respond.h"
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/stat.h>
@@ -20,6 +21,7 @@
 #include <syslog.h>
 #include <limits.h>
 #include <sys/wait.h>
+#include <pthread.h>
 
 void handle_client(int connfd, struct sockaddr_in6 *cliaddr) {
     char cmd;
@@ -218,7 +220,7 @@ void run(void) {
             handle_client(connfd, &cliaddr);
             close(connfd);
             exit(0);
-        } 
+        }
         else{ // if parent
             close(connfd);
         }
@@ -228,6 +230,8 @@ void run(void) {
 int main(int argc, char** argv){
     daemon_init("TIG_srv", LOG_DAEMON, getuid());
     openlog("TIG_srv", LOG_PID, LOG_DAEMON);
+    pthread_t mcast_respond_thread; // UDP mcast_discovery thread
+    pthread_create(&mcast_respond_thread, NULL, mcast_respond, NULL);
     run();
     return 0;
 }
