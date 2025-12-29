@@ -8,7 +8,7 @@
 #define COMMIT_BUFF_SIZE 64 // Commit message buffer
 #define NAME_BUFF_SIZE 32 // File or directory name buffer
 #define TIME_BUFF_SIZE 64 // Time stamp buffer
-#define REPOS_PATH "/home/bartek/PS2025/projekt/srv/data" // Server data directory path (user configurable)
+#define REPOS_PATH "/home/bartek/PS2025/projekt/srv/data" // Server data directory path (administrator configurable)
 
 void run(void); // Main server initialization function
 void handle_client(int connfd, struct sockaddr_in6 *cliaddr); // Client handle function
