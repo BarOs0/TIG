@@ -60,7 +60,7 @@ The executables `TIG_cli` (client) and `TIG_srv` (server) will appear in the `bu
 5.1 Check if TIG daemon works:
     sudo ps aux | grep TIG_srv
 6. Check syslog logs:
-    sudo grep TIG_srv /var/log/syslog //Check syslog logs for TIG_srv
+    sudo grep TIG_srv /var/log/syslog 
 6.1 Reset syslog history for TIG server:
     sudo truncate -s 0 /var/log/syslog
 7. Disable TIG server:

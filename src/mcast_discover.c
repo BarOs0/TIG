@@ -19,53 +19,12 @@ int mcast_discover(void){
     bzero(&servaddr, sizeof(servaddr));
     socklen_t len = sizeof(servaddr);
 
-    char msg[MSG_SIZE] = {0};
-    char srvaddrstr[INET6_ADDRSTRLEN] = {0};
+    char srvaddrstr[ADDR_BUFF_SIZE] = {0};
 
     if((sockfd = socket(AF_INET6, SOCK_DGRAM,0)) < 0){ // UDP socket for multicast discovery 
         fprintf(stderr, "mcast_discover.c socket() error: %s\n", strerror(errno));
         return -1;
     }
-
-    struct ifaddrs *ifaddr, *ifa;
-    struct sockaddr_in6 *sin6 = NULL;
-    char addrstr[INET6_ADDRSTRLEN];
-
-    // ===LOOKING FOR FIRST GLOBAL LINK ADDR===
-
-    if (getifaddrs(&ifaddr) == -1) {
-        fprintf(stderr, "getifaddrs() error: %s\n", strerror(errno));
-        close(sockfd);
-        return -1;
-    }
-
-    int found = 0;
-    for (ifa = ifaddr; ifa != NULL; ifa = ifa->ifa_next){
-        if (ifa->ifa_addr && ifa->ifa_addr->sa_family == AF_INET6 && strcmp(ifa->ifa_name, MCAST_IF) == 0){
-            sin6 = (struct sockaddr_in6 *)ifa->ifa_addr;
-            if (!IN6_IS_ADDR_LINKLOCAL(&sin6->sin6_addr)){
-                found = 1;
-                break;
-            }
-        }
-    }
-
-    // ===BIND() TO FIRST GLOBAL LINK ADDR=== 
-
-    if (found){
-        struct sockaddr_in6 localaddr;
-        bzero(&localaddr, sizeof(localaddr));
-        localaddr.sin6_family = AF_INET6;
-        localaddr.sin6_addr = sin6->sin6_addr;
-        localaddr.sin6_port = 0;
-        if (bind(sockfd, (struct sockaddr*)&localaddr, sizeof(localaddr)) < 0){
-            fprintf(stderr, "mcast_discover.c bind() error: %s\n", strerror(errno));
-            freeifaddrs(ifaddr);
-            close(sockfd);
-            return -1;
-        }
-    }
-    freeifaddrs(ifaddr);
 
     int ifindex;
     if((ifindex = if_nametoindex(MCAST_IF)) == 0){ // Get interface index (user may configure this one)
@@ -104,15 +63,14 @@ int mcast_discover(void){
         return -1;
     }
 
-    if((n = recvfrom(sockfd, msg, (MSG_SIZE - 1), 0, (struct sockaddr*) &servaddr, &len)) < 0){ // Recevie response from server
+    if((n = recvfrom(sockfd, srvaddrstr, (ADDR_BUFF_SIZE - 1), 0, (struct sockaddr*) &servaddr, &len)) < 0){ // Recevie response from server
         fprintf(stderr, "mcast_discover.c recvfrom() error: %s\n", strerror(errno));
+        close(sockfd);
+        return -1;
     }
-    msg[n] = '\0';
-    if(strcmp(msg, RESPONSE_MSG) == 0){
-        inet_ntop(AF_INET6, &servaddr.sin6_addr, srvaddrstr, INET6_ADDRSTRLEN);
-        printf("Server: [%s]:%d discovered\n", srvaddrstr, ntohs(servaddr.sin6_port)); // Print the address found by multicast discovery 
+    srvaddrstr[n] = '\0';
+    printf("%s", srvaddrstr); // Print the address found by multicast discovery 
     close(sockfd);
 
     return 0;
-    }
 }
