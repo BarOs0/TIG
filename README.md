@@ -12,7 +12,7 @@ TIG is a tool for transferring directories and files between a client and a serv
 ## Directory Structure
 - `src/` — program source code (C)
 - `include/` — header files
-- `srv/` — server data (backups, commits, repos)
+- `srv/` — server data (backups, commits, list, repos)
 ```sh
 !!! The administrator must supervise the data from srv/data, e.g. deleting dead repositories, and records related to this repositories. !!!
 ```
