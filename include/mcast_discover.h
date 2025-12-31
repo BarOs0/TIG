@@ -7,7 +7,7 @@
 #define RESPONSE_MSG "TIG_RESPONSE" // Server discovery reponse
 #define TIMEOUT 3 // Seconds, socket timeout
 #define ADDR_BUFF_SIZE 1024 // Server addresses buffer
-#define MCAST_IF "eth1" // Multicast interface (client, user configurable)
+#define MCAST_IF "eth2" // Multicast interface (client, user configurable)
 
 int mcast_discover(void); // Client discovery function
 

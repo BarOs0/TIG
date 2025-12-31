@@ -1,7 +1,7 @@
 # TIG
 
 ## Project Description
-TIG is a tool for transferring directories and files between a client and a server using IPv6 networking in local network.
+TIG is a tool for transferring directories and files between a client and a server using IPv6 in local network.
 
 ## Requirements
 - Linux system (Ubuntu)
@@ -23,7 +23,7 @@ TIG is a tool for transferring directories and files between a client and a serv
 
 ## Build Instructions
 ```sh
-mkdir -p build
+mkdir build
 cd build
 cmake ..
 make
@@ -33,23 +33,22 @@ The executables `TIG_cli` (client) and `TIG_srv` (server) will appear in the `bu
 ## Running the Program
 ### Server
 ```sh
-./build/TIG_srv
+./TIG_srv
 ```
 
 ### Client arguments
 ```sh
-./build/TIG_cli <repos/discover> or <commit> <repo name> <message> or <pull/push> <repo name>
+./TIG_cli <repos/discover> or <commit> <repo name> <message> or <pull/push> <repo name>
 ```
 
 ### Server administrator manual
 ```sh
-1. Check your interface configurations and verify IPv6 addresess (for UDP dicovery and TCP conection)
+1. Check server interface configurations and verify IPv6 addresess (for UDP dicovery and TCP conection)
     ifconfig
-1.1 If it is necessery add local-link IPv6 address for UDP mcast discovery
-1.2 If it is necessery add global-link IPv6 address for TCP communication
+1.1 If it is necessery add global-link IPv6 address for TCP communication
     ifconfig <if name> inet6 addif <IPv6 address>/<prefix> up
-1.3 Check server interface name for UDP mcast discovery (#define MCAST_IF in mcast_respond.h)
-1.4 Check server IPv6 mulitcast address (ff02:: ... for local link) (#define MCAST_ADDR in mcast_respond.h)
+1.2 Check server interface name for UDP mcast discovery (#define MCAST_IF in mcast_respond.h)
+1.3 Check server IPv6 mulitcast address (ff02:: ... for local link) (#define MCAST_ADDR in mcast_respond.h)
 
 2. Disable fierwall for tcp on 2025 port:
     sudo ip6tables -I INPUT -p tcp --dport 2025 -j ACCEPT
@@ -71,7 +70,7 @@ The executables `TIG_cli` (client) and `TIG_srv` (server) will appear in the `bu
 6.1 Reset syslog history for TIG server:
     sudo truncate -s 0 /var/log/syslog
 
-7. Disable TIG server:
+7. Terminate TIG server process:
     sudo ps aux | grep TIG_srv
     sudo kill -9 <daemon PID>
 ```

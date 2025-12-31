@@ -119,13 +119,28 @@ void handle_client(int connfd, struct sockaddr_in6 *cliaddr) {
                 return;
             }
             int i = 0;
+            int repo_name_exist = 0; // flag (if repo name is already listed)
             char line[256];
             rewind(f);
             while(fgets(line, sizeof(line), f)){
                 if(line[0] == '\n' || line[0] == '\0') continue; // skip '\n' and '\0'
                 i++; // increment lines
+                char *repo_name_space = strchr(line, ' '); // format: 1.' '<repo_name>
+                if(repo_name_space){
+                    char* name = repo_name_space + 1; // one char after space (pure repo name)
+                    char* newline = strchr(name, '\n'); 
+                    if(newline){ // delete '\n'
+                        *newline = '\0';
+                    }
+                    if(strcmp(name, name_buff) == 0){ // if repo name is already listed -> set repo_name_exist flag
+                        repo_name_exist = 1;
+                        break;
+                    }
+                }
             }
-            fprintf(f, "%d. %s\n", i + 1, name_buff); // update list file
+            if(repo_name_exist == 0){
+                fprintf(f, "%d. %s\n", i + 1, name_buff); // update list file
+            }
             fclose(f);
             break;
 
@@ -159,7 +174,7 @@ void handle_client(int connfd, struct sockaddr_in6 *cliaddr) {
 
 void sigchld_handler(int signo){ // ZOMBIE TERMINATION
     (void)signo;
-    while (waitpid(-1, NULL, WNOHANG) > 0);
+    while (waitpid(-1, NULL, WNOHANG) > 0); // the walking dead 
 }
 
 void run(void) {
@@ -173,7 +188,7 @@ void run(void) {
     struct sigaction sa; // SIGCHLD interception
     sa.sa_handler = sigchld_handler;
     sigemptyset(&sa.sa_mask);
-    sa.sa_flags = SA_RESTART;
+    sa.sa_flags = SA_RESTART; // blocking functions will continue 
     sigaction(SIGCHLD, &sa, NULL);
 
     if((listenfd = socket(AF_INET6, SOCK_STREAM, 0)) < 0){ // creating listening socket
