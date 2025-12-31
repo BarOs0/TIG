@@ -1,2 +1,0 @@
-/usr/bin/ar qc libtig_srv_helpers.a CMakeFiles/tig_srv_helpers.dir/src/daemon.c.o CMakeFiles/tig_srv_helpers.dir/src/copy_directory.c.o CMakeFiles/tig_srv_helpers.dir/src/mcast_respond.c.o
-/usr/bin/ranlib libtig_srv_helpers.a
