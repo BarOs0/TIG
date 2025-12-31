@@ -161,8 +161,16 @@ int main(int argc, char **argv){
     else if(argc == 3 && (strcmp(argv[1], "pull") == 0 || strcmp(argv[1], "push") == 0)){
         return connection(argv[1], argv[2], NULL);
     }
-    else if(argc == 4 && (strcmp(argv[1], "commit") == 0)){
-        return connection(argv[1], argv[2], argv[3]);
+    else if(argc >= 4 && (strcmp(argv[1], "commit") == 0)){
+        char commit_msg[COMMIT_BUFF_SIZE] = {0};
+        int i;
+        for(i = 3; i < argc; i++){
+            strcat(commit_msg, argv[i]);
+            if(i < argc - 1){
+                strcat(commit_msg, " ");
+            }
+        }
+        return connection(argv[1], argv[2], commit_msg);
     }
     else{
         fprintf(stderr, "ERROR: usage: ./TIG_cli <repos> or ./TIG_cli <commit> <repo name> <message> or ./TIG_cli <pull/push> <repo name>\n");
