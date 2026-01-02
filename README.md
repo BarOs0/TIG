@@ -38,7 +38,7 @@ The executables `TIG_cli` (client) and `TIG_srv` (server) will appear in the `bu
 
 ### Client arguments
 ```sh
-./TIG_cli <repos/discover> or <commit> <repo name> <message> or <pull/push> <repo name>
+./TIG_cli <repos/discover> or <commit> <repo name> <message> or <pull/push> <repo name> or <read> <repo name>
 ```
 
 ### Server administrator manual

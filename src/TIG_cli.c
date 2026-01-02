@@ -192,7 +192,7 @@ int main(int argc, char **argv){
         return connection(argv[1], argv[2], commit_msg);
     }
     else{
-        fprintf(stderr, "ERROR: usage: ./TIG_cli <repos> or ./TIG_cli <commit> <repo name> <message> or ./TIG_cli <pull/push> <repo name> or ./TIG_cli <read> <repo name>\n");
+        fprintf(stderr, "ERROR: usage: ./TIG_cli <repos/discover> or <commit> <repo name> <message> or <pull/push> <repo name> or <read> <repo name>\n");
     }
     
     return 0;
