@@ -1,0 +1,2 @@
+/usr/bin/ar qc libtig_helpers.a CMakeFiles/tig_helpers.dir/src/recv_file.c.o CMakeFiles/tig_helpers.dir/src/recv_directory.c.o CMakeFiles/tig_helpers.dir/src/send_file.c.o CMakeFiles/tig_helpers.dir/src/send_directory.c.o CMakeFiles/tig_helpers.dir/src/get_time.c.o
+/usr/bin/ranlib libtig_helpers.a

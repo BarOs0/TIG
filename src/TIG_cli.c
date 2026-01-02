@@ -68,7 +68,7 @@ int connection(const char* opt, const char* repo_name, const char* commit) {
      * ARGUMENTS SERVICE
      * Client is sending commands (cmd) to server and supports them by receiving or sending whole directories
      * Client is sending repository names in order to server data storage
-     * Each command is char [R - repos, C - commit, U - pull, P - push]
+     * Each cmd is char [R - repos, C - commit, U - pull, P - push, Q - read commits]
      */
 
     if(repo_name == NULL){
