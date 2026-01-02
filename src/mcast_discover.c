@@ -21,25 +21,25 @@ int mcast_discover(void){
 
     char srvaddrstr[ADDR_BUFF_SIZE] = {0};
 
-    if((sockfd = socket(AF_INET6, SOCK_DGRAM,0)) < 0){ // UDP socket for multicast discovery 
+    if((sockfd = socket(AF_INET6, SOCK_DGRAM,0)) < 0){ ///< UDP socket for multicast discovery 
         fprintf(stderr, "mcast_discover.c socket() error: %s\n", strerror(errno));
         return -1;
     }
 
     int ifindex;
-    if((ifindex = if_nametoindex(MCAST_IF)) == 0){ // Get interface index (user may configure this one)
+    if((ifindex = if_nametoindex(MCAST_IF)) == 0){ ///< Get interface index (user may configure this one)
         fprintf(stderr, "mcast_discover.c interface: %s unreachable\n", MCAST_IF);
         close(sockfd);
         return -1;
     }
 
-    if(setsockopt(sockfd, IPPROTO_IPV6, IPV6_MULTICAST_IF, &ifindex, sizeof(ifindex)) < 0){ // Send multicast discovery via user-configurable interface
+    if(setsockopt(sockfd, IPPROTO_IPV6, IPV6_MULTICAST_IF, &ifindex, sizeof(ifindex)) < 0){ ///< Send multicast discovery via user-configurable interface
         fprintf(stderr, "mcast_discover.c setsockopt(ifindex) error: %s\n", strerror(errno));
         close(sockfd);
         return -1;
     }
 
-    mcastaddr.sin6_family = AF_INET6; // Prepare multicast sendto() address
+    mcastaddr.sin6_family = AF_INET6; ///< Prepare multicast sendto() address
     mcastaddr.sin6_port = htons(MCAST_PORT);
 
     if(inet_pton(AF_INET6, MCAST_ADDR, &mcastaddr.sin6_addr) < 0){ 
@@ -48,13 +48,13 @@ int mcast_discover(void){
         return -1;
     }
 
-    if(sendto(sockfd, DISCOVER_MSG, strlen(DISCOVER_MSG), 0, (struct sockaddr*) &mcastaddr, sizeof(mcastaddr)) < 0){ // Send multicast
+    if(sendto(sockfd, DISCOVER_MSG, strlen(DISCOVER_MSG), 0, (struct sockaddr*) &mcastaddr, sizeof(mcastaddr)) < 0){ ///< Send multicast
         fprintf(stderr, "mcast_discover.c sendto() error: %s\n", strerror(errno));
         close(sockfd);
         return -1;
     }
 
-    struct timeval tv; // socket delay (deafult 3s)
+    struct timeval tv; ///< Socket delay (default 3s)
     tv.tv_sec = TIMEOUT;
     tv.tv_usec = 0;
     if(setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(tv)) < 0){
@@ -63,13 +63,13 @@ int mcast_discover(void){
         return -1;
     }
 
-    if((n = recvfrom(sockfd, srvaddrstr, (ADDR_BUFF_SIZE - 1), 0, (struct sockaddr*) &servaddr, &len)) < 0){ // Recevie response from server
+    if((n = recvfrom(sockfd, srvaddrstr, (ADDR_BUFF_SIZE - 1), 0, (struct sockaddr*) &servaddr, &len)) < 0){ ///< Receive response from server
         fprintf(stderr, "mcast_discover.c recvfrom() error: %s\n", strerror(errno));
         close(sockfd);
         return -1;
     }
     srvaddrstr[n] = '\0';
-    printf("%s", srvaddrstr); // Print the address found by multicast discovery 
+    printf("%s", srvaddrstr); ///< Print the address found by multicast discovery 
     close(sockfd);
 
     return 0;

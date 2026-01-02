@@ -8,7 +8,7 @@
 void print_file(int sockfd){
 
     uint64_t filesize;
-    if(read(sockfd, &filesize, sizeof(filesize)) != sizeof(filesize)){ // reading file size from peer
+    if(read(sockfd, &filesize, sizeof(filesize)) != sizeof(filesize)){ ///< Reading file size from peer
         perror("print_file read() size error");
         return;
     }
@@ -18,17 +18,17 @@ void print_file(int sockfd){
     ssize_t bytes_to_read;
     ssize_t bytes_read;
 
-    while(bytes_left > 0){ // reading all bytes from file from peer
+    while(bytes_left > 0){ ///< Reading all bytes from file from peer
         bytes_to_read = (bytes_left > BUFF_SIZE) ? BUFF_SIZE : bytes_left;
-        bytes_read = read(sockfd, buff, bytes_to_read); // read data to the file data buffer
+        bytes_read = read(sockfd, buff, bytes_to_read); ///< Read data to the file data buffer
         if(bytes_read == 0) break;
         if(bytes_read < 0){
             perror("print_file read() file error");
             break;
         }
-        buff[bytes_read] = '\0'; // null-terminate for printf (bezpiecznie)
-        printf("%.*s", (int)bytes_read, buff); // print as string even with nulls
-        bytes_left -= bytes_read; // decrement bytes_left
+        buff[bytes_read] = '\0'; ///< Null-terminate for printf (safely)
+        printf("%.*s", (int)bytes_read, buff); ///< Print as string even with nulls
+        bytes_left -= bytes_read; ///< Decrement bytes_left
     }
-    fflush(stdout); // throw all through stdout
+    fflush(stdout); ///< Flush all through stdout
 }

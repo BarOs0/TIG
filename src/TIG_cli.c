@@ -21,7 +21,7 @@ int connection(const char* opt, const char* repo_name, const char* commit) {
     char commit_buff[COMMIT_BUFF_SIZE] = {0};
     char name_buff[NAME_BUFF_SIZE] = {0};
 
-    //  ===DNS DOMAIN RESOLUTION===
+    /** DNS DOMAIN RESOLUTION */
 
     memset(&hints, 0, sizeof(hints));
     hints.ai_family = AF_INET6;
@@ -35,14 +35,14 @@ int connection(const char* opt, const char* repo_name, const char* commit) {
         return -1;
     }
 
-    //  ===CREATING CLIENT SOCKET===
+    /** CREATING CLIENT SOCKET */
 
     for (rp = res; rp != NULL; rp = rp->ai_next){
         sockfd = socket(rp->ai_family, rp->ai_socktype, rp->ai_protocol);
         if (sockfd == -1)
             continue;
 
-    //  ===CONNECT WITH SERVER===
+    /** CONNECT WITH SERVER */
 
         if (connect(sockfd, rp->ai_addr, rp->ai_addrlen) == 0)
             break;
@@ -56,7 +56,7 @@ int connection(const char* opt, const char* repo_name, const char* commit) {
         return -1;
     }
 
-    //  ===WHERE AM I? FIND CURRENT PATH===
+    /** WHERE AM I? FIND CURRENT PATH */
 
     char cwd[PATH_MAX];
     if(getcwd(cwd, PATH_MAX) == NULL){
@@ -64,25 +64,27 @@ int connection(const char* opt, const char* repo_name, const char* commit) {
         return -1;
     }
 
-    //  ===ARGUMENTS SERVICE===
-    // Client is sending commands (cmd) to server and supports them by recieving or sending whole directories
-    // Client is sending repository names in order to server data storage
-    // Each command is char [R - repos, C - commit, U - pull, P - push]
+    /**
+     * ARGUMENTS SERVICE
+     * Client is sending commands (cmd) to server and supports them by receiving or sending whole directories
+     * Client is sending repository names in order to server data storage
+     * Each command is char [R - repos, C - commit, U - pull, P - push]
+     */
 
     if(repo_name == NULL){
         if(strcmp(opt, "repos") == 0){
-            cmd = 'R'; // R - repos
-            if(write(sockfd, &cmd, 1) < 0){ // send 'R' command
+            cmd = 'R'; ///< R - repos
+            if(write(sockfd, &cmd, 1) < 0){ ///< Send 'R' command
                 fprintf(stderr, "TIG_cli.c repos write() error: %s\n", strerror(errno));
                 return -1;
             }
-            print_file(sockfd); // print listed repository names received from server
+            print_file(sockfd); ///< Print listed repository names received from server
         }
     }
     else{
         if(strcmp(opt, "commit") == 0){
-            cmd = 'C'; // C - commit
-            if(write(sockfd, &cmd, 1) < 0){ // send 'C' commend
+            cmd = 'C'; ///< C - commit
+            if(write(sockfd, &cmd, 1) < 0){ ///< Send 'C' command
                 fprintf(stderr, "TIG_cli.c commit write() error: %s\n", strerror(errno));
                 return -1;
             }
@@ -106,43 +108,60 @@ int connection(const char* opt, const char* repo_name, const char* commit) {
             }
         }
         else if(strcmp(opt, "pull") == 0){
-            cmd = 'U'; // U - pull
-            if(write(sockfd, &cmd, 1) < 0){ // send 'U' command
+            cmd = 'U'; ///< U - pull
+            if(write(sockfd, &cmd, 1) < 0){ ///< Send 'U' command
                 fprintf(stderr, "TIG_cli.c pull write() error: %s\n", strerror(errno));
                 return -1;
             }
-            if(strlen(repo_name) >= NAME_BUFF_SIZE){ // check if repository name is not too long
+            if(strlen(repo_name) >= NAME_BUFF_SIZE){ ///< Check if repository name is not too long
                 fprintf(stderr, "Repo name is too long\n");
                 return -1;
             }
             strcpy(name_buff, repo_name);
-            if(write(sockfd, name_buff, NAME_BUFF_SIZE) < 0){ // send repository name to pull
+            if(write(sockfd, name_buff, NAME_BUFF_SIZE) < 0){ ///< Send repository name to pull
                 fprintf(stderr, "TIG_cli.c name in pull write() error: %s\n", strerror(errno));
                 return -1;
             }
-            recv_directory(sockfd, cwd); // receive whole project directory
+            recv_directory(sockfd, cwd); ///< Receive whole project directory
         }
         else if(strcmp(opt, "push") == 0){
-            cmd = 'P'; // P - push
-            if(write(sockfd, &cmd, 1) < 0){ // send 'P' command
+            cmd = 'P'; ///</< P - push
+            if(write(sockfd, &cmd, 1) < 0){ ///< Send 'P' command
                 fprintf(stderr, "TIG_cli.c push write() error: %s\n", strerror(errno));
                 return -1;
             }
-            if(strlen(repo_name) >= NAME_BUFF_SIZE){ // check if repository name is not too long
+            if(strlen(repo_name) >= NAME_BUFF_SIZE){ ///< Check if repository name is not too long
                 fprintf(stderr, "Repo name is too long\n");
                 return -1;
             }
             strcpy(name_buff, repo_name);
-            if(write(sockfd, name_buff, NAME_BUFF_SIZE) < 0){ // send repository name to push
+            if(write(sockfd, name_buff, NAME_BUFF_SIZE) < 0){ ///< Send repository name to push
                 fprintf(stderr, "TIG_cli.c name in push write() error: %s\n", strerror(errno));
                 return -1;
             }
-            send_directory(sockfd, cwd); // send whole project directory
+            send_directory(sockfd, cwd); ///< Send whole project directory
+        }
+        else if(strcmp(opt, "read") == 0){
+            cmd = 'Q'; ///</< Q - Read commits
+            if(write(sockfd, &cmd, 1) < 0){ ///< Send 'Q' command
+                fprintf(stderr, "TIG_cli.c read write() error: %s\n", strerror(errno));
+                return -1;
+            }
+            if(strlen(repo_name) >= NAME_BUFF_SIZE){ ///< Check if repository name is not too long
+                fprintf(stderr, "Repo name is too long\n");
+                return -1;
+            }
+            strcpy(name_buff, repo_name);
+            if(write(sockfd, name_buff, NAME_BUFF_SIZE) < 0){ ///< Send repository name to read commits
+                fprintf(stderr, "TIG_cli.c name in push write() error: %s\n", strerror(errno));
+                return -1;
+            }
+            print_file(sockfd); ///< Print commits file
         }
     }
 
-    fprintf(stderr, "OK\n"); // print OK if success
-    freeaddrinfo(res); // free resources
+    fprintf(stderr, "OK\n"); ///< Print OK if success
+    freeaddrinfo(res); ///< Free resources
     close(sockfd);
 
     return 0;
@@ -150,7 +169,7 @@ int connection(const char* opt, const char* repo_name, const char* commit) {
 
 int main(int argc, char **argv){
 
-    //  ===ARGUMENTS MANAGEMENT===
+    /** ARGUMENTS MANAGEMENT */
 
     if((argc == 2) && (strcmp(argv[1], "discover") == 0)){
         return mcast_discover();
@@ -158,7 +177,7 @@ int main(int argc, char **argv){
     else if((argc == 2) && (strcmp(argv[1], "repos") == 0)){
         return connection(argv[1], NULL, NULL);
     }
-    else if(argc == 3 && (strcmp(argv[1], "pull") == 0 || strcmp(argv[1], "push") == 0)){
+    else if(argc == 3 && (strcmp(argv[1], "pull") == 0 || strcmp(argv[1], "push") == 0 || strcmp(argv[1], "read") == 0)){
         return connection(argv[1], argv[2], NULL);
     }
     else if(argc >= 4 && (strcmp(argv[1], "commit") == 0)){
@@ -173,7 +192,7 @@ int main(int argc, char **argv){
         return connection(argv[1], argv[2], commit_msg);
     }
     else{
-        fprintf(stderr, "ERROR: usage: ./TIG_cli <repos> or ./TIG_cli <commit> <repo name> <message> or ./TIG_cli <pull/push> <repo name>\n");
+        fprintf(stderr, "ERROR: usage: ./TIG_cli <repos> or ./TIG_cli <commit> <repo name> <message> or ./TIG_cli <pull/push> <repo name> or ./TIG_cli <read> <repo name>\n");
     }
     
     return 0;
