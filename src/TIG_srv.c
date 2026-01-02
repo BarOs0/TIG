@@ -225,7 +225,7 @@ void run(void) {
 
     char time_str[TIME_BUFF_SIZE] = {0};
     get_time(time_str, TIME_BUFF_SIZE);
-    syslog(LOG_INFO, " %s\n", " System ready, waiting for clients..."); ///< LOGGING FOR ADMINISTRATOR 
+    syslog(LOG_INFO, "%s\n", " System ready, waiting for clients..."); ///< LOGGING FOR ADMINISTRATOR 
 
     while(1){
 
