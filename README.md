@@ -19,7 +19,7 @@ TIG is a tool for transferring directories and files between a client and a serv
 - `srv/data/backups` — repository version from last push
 - `srv/data/commits` — a directory of time-stamped commits
 - `srv/data/repos` — directory with the latest repositories
-- `srv/data/list` — list of repositories / this file appears after first push
+- `srv/data/list` — list of repositories - this file appears after first push
 
 ## Build Instructions
 ```sh
@@ -104,5 +104,11 @@ The executables `TIG_cli` (client) and `TIG_srv` (server) will appear in the `bu
     <ESC>
     :wq
 5. Now you can use TIG system
+```
+# Documentation
+For API detatils create a doxygen documentation from the project root:
+```sh
+doxygen -g
+doxygen Doxyfile
 ```
 
