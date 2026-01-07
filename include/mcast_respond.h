@@ -1,6 +1,11 @@
 #ifndef MCAST_RESPOND_H
 #define MCAST_RESPOND_H
 
+/**
+ * @file mcast_respond.h
+ * @brief Server multicast response function for client discovery
+ */
+
 #define MCAST_ADDR "ff02::2026" ///< IPv6 multicast address
 #define MCAST_PORT 2026 ///< UDP multicast port
 #define DISCOVER_MSG "TIG_DISCOVERY" ///< Client discovery request

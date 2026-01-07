@@ -1,3 +1,8 @@
+/**
+ * @file mcast_respond.c
+ * @brief Implementation of IPv6 multicast response for client discovery
+ */
+
 #include "mcast_respond.h"
 #include <pthread.h>
 #include <netinet/in.h>

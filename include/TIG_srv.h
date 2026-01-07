@@ -1,6 +1,11 @@
 #ifndef TIG_SRV_H
 #define TIG_SRV_H
 
+/**
+ * @file TIG_srv.h
+ * @brief TIG server main header file
+ */
+
 #include <netinet/in.h>
 
 #define LISTENQ 2 ///< Clients queue for listen()

@@ -1,3 +1,8 @@
+/**
+ * @file send_file.c
+ * @brief Implementation of file sending over network socket
+ */
+
 #include "send_file.h"
 #include <sys/stat.h>
 #include <string.h>

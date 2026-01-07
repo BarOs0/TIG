@@ -1,6 +1,11 @@
 #ifndef TIG_CLI_H
 #define TIG_CLI_H
 
+/**
+ * @file TIG_cli.h
+ * @brief TIG client main header file
+ */
+
 #include <limits.h>
 
 #define LISTEN_PORT 2025 ///< Server listening port

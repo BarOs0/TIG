@@ -1,3 +1,8 @@
+/**
+ * @file print_file.c
+ * @brief Implementation of file content printing from network socket
+ */
+
 #include "print_file.h"
 #include <fcntl.h>
 #include <unistd.h>

@@ -1,3 +1,8 @@
+/**
+ * @file recv_directory.c
+ * @brief Implementation of recursive directory receiving over network
+ */
+
 #include "recv_file.h"
 #include "recv_directory.h"
 #include <stdio.h>

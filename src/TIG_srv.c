@@ -1,3 +1,8 @@
+/**
+ * @file TIG_srv.c
+ * @brief TIG server implementation - handles client requests and repository storage
+ */
+
 #include "TIG_srv.h"
 #include "daemon.h"
 #include "recv_directory.h"
@@ -255,6 +260,12 @@ void run(void) {
     }
 }
 
+/**
+ * @brief Main function for TIG server - initializes daemon and starts server
+ * @param argc Argument count
+ * @param argv Argument vector
+ * @return 0 on success
+ */
 int main(int argc, char** argv){
     daemon_init("TIG_srv", LOG_DAEMON, getuid());
     openlog("TIG_srv", LOG_PID, LOG_DAEMON);

@@ -1,3 +1,8 @@
+/**
+ * @file TIG_cli.c
+ * @brief TIG client implementation - handles repository operations
+ */
+
 #include "TIG_cli.h"
 #include "recv_directory.h"
 #include "send_directory.h"
@@ -167,6 +172,12 @@ int connection(const char* opt, const char* repo_name, const char* commit) {
     return 0;
 }
 
+/**
+ * @brief Main function for TIG client
+ * @param argc Argument count
+ * @param argv Argument vector
+ * @return 0 on success, -1 on error
+ */
 int main(int argc, char **argv){
 
     /** ARGUMENTS MANAGEMENT */

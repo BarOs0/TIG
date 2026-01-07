@@ -1,3 +1,8 @@
+/**
+ * @file recv_file.c
+ * @brief Implementation of file receiving over network socket
+ */
+
 #include "recv_file.h"
 #include <fcntl.h>
 #include <unistd.h>

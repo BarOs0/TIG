@@ -1,6 +1,11 @@
 #ifndef RECV_DIRECTORY_H
 #define RECV_DIRECTORY_H
 
+/**
+ * @file recv_directory.h
+ * @brief Functions for receiving directories over network
+ */
+
 #include <sys/types.h>
 
 #define FILE_NAME_SIZE 128 ///< File or directory name buffer

@@ -1,3 +1,8 @@
+/**
+ * @file get_time.c
+ * @brief Implementation of time formatting function
+ */
+
 #include "get_time.h"
 #include <time.h>
 

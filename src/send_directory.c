@@ -1,3 +1,8 @@
+/**
+ * @file send_directory.c
+ * @brief Implementation of recursive directory sending over network
+ */
+
 #include "send_directory.h"
 #include "send_file.h"
 #include <dirent.h>

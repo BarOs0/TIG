@@ -1,3 +1,8 @@
+/**
+ * @file daemon.c
+ * @brief Daemon initialization implementation using double fork technique
+ */
+
 #include "daemon.h"
 #include <signal.h>
 #include <fcntl.h>

@@ -1,3 +1,8 @@
+/**
+ * @file mcast_discover.c
+ * @brief Implementation of IPv6 multicast discovery for server detection
+ */
+
 #include "mcast_discover.h"
 #include <stdio.h>
 #include <string.h>

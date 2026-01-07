@@ -1,3 +1,8 @@
+/**
+ * @file copy_directory.c
+ * @brief Implementation of recursive directory and file copying
+ */
+
 #include "copy_directory.h"
 #include <sys/stat.h>
 #include <dirent.h>
