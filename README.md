@@ -36,7 +36,7 @@ The executables `TIG_cli` (client) and `TIG_srv` (server) will appear in the `bu
 ```
 
 ### Server administrator manual
-- Check server interface configurations and verify IPv6 addresess (for UDP dicovery and TCP conection)
+- Check server interface configurations and verify IPv6 addresess (for UDP dicovery and TCP connection)
 ```sh
 ifconfig
 ```
@@ -47,12 +47,12 @@ ifconfig <if name> inet6 addif <IPv6 address>/<prefix> up
 - Check server interface name for UDP mcast discovery (#define MCAST_IF in mcast_respond.h)
 - Check server IPv6 mulitcast address (ff02:: ... for local link) (#define MCAST_ADDR in mcast_respond.h)
 
-- Disable fierwall for tcp on 2025 port:
+- Disable fierwall for TCP on 2025 port:
 ```sh
 sudo ip6tables -I INPUT -p tcp --dport 2025 -j ACCEPT
 ```
 
-- Disable firewall for udp on 2026 port:
+- Disable firewall for UDP on 2026 port:
 ```sh
 sudo ip6tables -I INPUT -p udp --dport 2026 -j ACCEPT
 ```
@@ -88,7 +88,7 @@ sudo kill -9 <daemon PID>
 ```
 
 ### Client manual
-- Check your interface configurations and verify IPv6 adressess (for UDP dicovery and TCP conection)
+- Check your interface configurations and verify IPv6 adressess (for UDP dicovery and TCP connection)
 ```sh
 ifconfig
 ```
@@ -124,7 +124,7 @@ TIG discover
 vim /etc/hosts
 
 <INSERT>
-<[Server address from discovery command (global-link)]    TIG_srv>
+<[global-link IPv6 addr]    TIG_srv>
 <ESC>
 :wq
 ```
