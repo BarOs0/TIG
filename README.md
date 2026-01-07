@@ -76,35 +76,46 @@ The executables `TIG_cli` (client) and `TIG_srv` (server) will appear in the `bu
 ```
 
 ### Client manual
+- Check your interface configurations and verify IPv6 adressess (for UDP dicovery and TCP conection)
 ```sh
-1. Check your interface configurations and verify IPv6 adressess (for UDP dicovery and TCP conection)
-    ifconfig
-1.1 If it is necessery add local-link IPv6 address for UDP mcast discovery
-1.2 If it is necessery add global-link IPv6 address for TCP communication
-    ifconfig <if name> inet6 addif <IPv6 address>/<prefix> up
-1.2 Check client interface name for UDP mcast discovery (#define MCAST_IF in mcast_discover.h)
-1.3 Check client IPv6 multicast address (ff02:: ... for local link) (#define MCAST_ADDR in mcast_discover.h)
-
-2. [optional] Add an alias for TIG_cli application:
-    vim ~/.bashrc
-    <INSERT>
-    <alias TIG='/installation_path/TIG_cli'>
-    <ESC>
-    :wq
-
-3. Run TIG_cli with discover command:
-    ./TIG_cli discover
-3.1 If you have done step 2: 
-    TIG discover
-
-4. If client discovered TIG server - configure /etc/hosts file for DNS:
-    vim /etc/hosts
-    <INSERT>
-    <[Server address from discovery command (global-link)]    TIG_srv>
-    <ESC>
-    :wq
-5. Now you can use TIG system
+ifconfig
 ```
+- If it is necessery add local-link IPv6 address for UDP mcast discovery
+- If it is necessery add global-link IPv6 address for TCP communication
+```sh
+ifconfig <if name> inet6 addif <IPv6 address>/<prefix> up
+```
+- Check client interface name for UDP mcast discovery (#define MCAST_IF in mcast_discover.h)
+- Check client IPv6 multicast address (ff02:: ... for local link) (#define MCAST_ADDR in mcast_discover.h)
+
+- [optional] Add an alias for TIG_cli application:
+```sh
+vim ~/.bashrc
+<INSERT>
+<alias TIG='/installation_path/TIG_cli'>
+<ESC>
+:wq
+```
+
+- Run TIG_cli with discover command:
+```sh
+./TIG_cli discover
+```
+- If you have done step 2: 
+```sh
+TIG discover
+```
+
+- If client discovered TIG server - configure /etc/hosts file for DNS:
+```sh
+vim /etc/hosts
+<INSERT>
+<[Server address from discovery command (global-link)]    TIG_srv>
+<ESC>
+:wq
+```
+- Now you can use TIG system
+
 # Documentation
 For API detatils create a doxygen documentation from the project root:
 ```sh
