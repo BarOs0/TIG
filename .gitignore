@@ -1,0 +1,19 @@
+#IDE configuration file
+.vscode/
+
+#Executable files
+*.out
+*.exe
+
+#Build directory
+build/
+
+#Server data
+srv/data/repos/*
+srv/data/commits/*
+srv/data/backups/*
+
+#Server data trackers (for empty directories)
+!srv/data/repos/.gitkeep
+!srv/data/commits/.gitkeep
+!srv/data/backups/.gitkeep
