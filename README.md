@@ -30,12 +30,6 @@ make
 ```
 The executables `TIG_cli` (client) and `TIG_srv` (server) will appear in the `build/` directory.
 
-## Running the Program
-### Server
-```sh
-./TIG_srv
-```
-
 ### Client arguments
 ```sh
 ./TIG_cli <repos/discover> or <commit> <repo name> <message> or <pull/push> <repo name> or <read> <repo name>
