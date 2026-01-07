@@ -42,37 +42,55 @@ The executables `TIG_cli` (client) and `TIG_srv` (server) will appear in the `bu
 ```
 
 ### Server administrator manual
+- Check server interface configurations and verify IPv6 addresess (for UDP dicovery and TCP conection)
 ```sh
-1. Check server interface configurations and verify IPv6 addresess (for UDP dicovery and TCP conection)
-    ifconfig
-1.1 If it is necessery add global-link IPv6 address for TCP communication
-    ifconfig <if name> inet6 addif <IPv6 address>/<prefix> up
-1.2 Check server interface name for UDP mcast discovery (#define MCAST_IF in mcast_respond.h)
-1.3 Check server IPv6 mulitcast address (ff02:: ... for local link) (#define MCAST_ADDR in mcast_respond.h)
+ifconfig
+```
+- If it is necessery add global-link IPv6 address for TCP communication
+```sh
+ifconfig <if name> inet6 addif <IPv6 address>/<prefix> up
+```
+- Check server interface name for UDP mcast discovery (#define MCAST_IF in mcast_respond.h)
+- Check server IPv6 mulitcast address (ff02:: ... for local link) (#define MCAST_ADDR in mcast_respond.h)
 
-2. Disable fierwall for tcp on 2025 port:
-    sudo ip6tables -I INPUT -p tcp --dport 2025 -j ACCEPT
+- Disable fierwall for tcp on 2025 port:
+```sh
+sudo ip6tables -I INPUT -p tcp --dport 2025 -j ACCEPT
+```
 
-3. Disable firewall for udp on 2026 port:
-    sudo ip6tables -I INPUT -p udp --dport 2026 -j ACCEPT
+- Disable firewall for udp on 2026 port:
+```sh
+sudo ip6tables -I INPUT -p udp --dport 2026 -j ACCEPT
+```
 
-4. Configure your server data storage path (#define REPOS_PATH in TIG_srv.h):
-    /home/<user>/<TIG>/srv/data
+- Configure your server data storage path (#define REPOS_PATH in TIG_srv.h):
+```sh
+/home/<user>/<TIG>/srv/data
+```
 
-5. Run TIG server daemon:
-    sudo ./TIG_srv
+- Run TIG server daemon:
+```sh
+sudo ./TIG_srv
+```
 
-5.1 Check if TIG daemon works:
-    sudo ps aux | grep TIG_srv
+- Check if TIG daemon works:
+```sh
+sudo ps aux | grep TIG_srv
+```
 
-6. Check syslog logs:
-    sudo grep TIG_srv /var/log/syslog 
-6.1 Reset syslog history for TIG server:
-    sudo truncate -s 0 /var/log/syslog
+- Check syslog logs:
+```sh
+sudo grep TIG_srv /var/log/syslog 
+```
+- Reset syslog history for TIG server:
+```sh
+sudo truncate -s 0 /var/log/syslog
+```
 
-7. Terminate TIG server process:
-    sudo ps aux | grep TIG_srv
-    sudo kill -9 <daemon PID>
+- Terminate TIG server process:
+```sh
+sudo ps aux | grep TIG_srv
+sudo kill -9 <daemon PID>
 ```
 
 ### Client manual
@@ -91,6 +109,7 @@ ifconfig <if name> inet6 addif <IPv6 address>/<prefix> up
 - [optional] Add an alias for TIG_cli application:
 ```sh
 vim ~/.bashrc
+
 <INSERT>
 <alias TIG='/installation_path/TIG_cli'>
 <ESC>
@@ -101,7 +120,7 @@ vim ~/.bashrc
 ```sh
 ./TIG_cli discover
 ```
-- If you have done step 2: 
+- If you already have alias:
 ```sh
 TIG discover
 ```
@@ -109,6 +128,7 @@ TIG discover
 - If client discovered TIG server - configure /etc/hosts file for DNS:
 ```sh
 vim /etc/hosts
+
 <INSERT>
 <[Server address from discovery command (global-link)]    TIG_srv>
 <ESC>
