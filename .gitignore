@@ -12,6 +12,7 @@ build/
 srv/data/repos/*
 srv/data/commits/*
 srv/data/backups/*
+srv/data/list
 
 #Server data trackers (for empty directories)
 !srv/data/repos/.gitkeep
