@@ -20,7 +20,7 @@ void clear_dir(const char* dirpath){
 
     while((entry = readdir(dir)) != NULL){ ///< Iterate through directory content
         if(strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0 || 
-        strcmp(entry->d_name, "TIG_cli") == 0 || strcmp(entry->d_name, ".gitkeep") == 0){ ///< Skip . or .. or TIG_cli (binary client app) or .gitkeep - gitignore file
+        strcmp(entry->d_name, "TIG_cli") == 0 || strcmp(entry->d_name, ".gitkeep") == 0){ ///< Skip . or .. or TIG_cli (binary client app) or .gitkeep - gitignore stamp for empty file
             continue;
         }
         snprintf(filepath, PATH_MAX, "%s/%s", dirpath, entry->d_name); ///< Prepare directory path
