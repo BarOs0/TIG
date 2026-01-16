@@ -19,12 +19,14 @@ int mcast_discover(void){
 
     int sockfd, n;
     struct sockaddr_in6 mcastaddr, servaddr;
+    char msg[MSG_SIZE] = {0};
+    char srvaddrstr[ADDR_BUFF_SIZE] = {0};
 
     bzero(&mcastaddr, sizeof(mcastaddr));
     bzero(&servaddr, sizeof(servaddr));
     socklen_t len = sizeof(servaddr);
 
-    char srvaddrstr[ADDR_BUFF_SIZE] = {0};
+    
 
     if((sockfd = socket(AF_INET6, SOCK_DGRAM,0)) < 0){ ///< UDP socket for multicast discovery 
         fprintf(stderr, "mcast_discover.c socket() error: %s\n", strerror(errno));
@@ -53,7 +55,9 @@ int mcast_discover(void){
         return -1;
     }
 
-    if(sendto(sockfd, DISCOVER_MSG, strlen(DISCOVER_MSG), 0, (struct sockaddr*) &mcastaddr, sizeof(mcastaddr)) < 0){ ///< Send multicast
+    strcpy(msg, DISCOVER_MSG);
+
+    if(sendto(sockfd, msg, strlen(msg), 0, (struct sockaddr*) &mcastaddr, sizeof(mcastaddr)) < 0){ ///< Send multicast
         fprintf(stderr, "mcast_discover.c sendto() error: %s\n", strerror(errno));
         close(sockfd);
         return -1;
@@ -68,14 +72,20 @@ int mcast_discover(void){
         return -1;
     }
 
-    if((n = recvfrom(sockfd, srvaddrstr, (ADDR_BUFF_SIZE - 1), 0, (struct sockaddr*) &servaddr, &len)) < 0){ ///< Receive response from server
+    if((n = recvfrom(sockfd, msg, (MSG_SIZE - 1), 0, (struct sockaddr*) &servaddr, &len)) < 0){ ///< Receive response from server
         fprintf(stderr, "mcast_discover.c recvfrom() error: %s\n", strerror(errno));
         close(sockfd);
         return -1;
     }
-    srvaddrstr[n] = '\0';
-    printf("%s", srvaddrstr); ///< Print the address found by multicast discovery 
+    msg[n] = '\0'; ///< Find end of string
+    if(strcmp(msg, DISCOVER_RESPONSE) == 0){ ///< Check if TIG server
+        if(inet_ntop(AF_INET6, &servaddr.sin6_addr, srvaddrstr, ADDR_BUFF_SIZE) != NULL){ ///< Prepare TIG_srv addr string
+            printf("Server found at: %s\n", srvaddrstr); ///< Print TIG_srv addr
+        } else {
+            fprintf(stderr, "mcast_discover.c inet_ntop() error: %s\n", strerror(errno));
+        }
+    }
+    
     close(sockfd);
-
     return 0;
 }

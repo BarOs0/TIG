@@ -6,11 +6,12 @@
  * @brief Server multicast response function for client discovery
  */
 
-#define MCAST_ADDR "ff02::2026" ///< IPv6 multicast address
+#define MCAST_ADDR "ff05::2026" ///< IPv6 multicast address
 #define MCAST_PORT 2026 ///< UDP multicast port
 #define DISCOVER_MSG "TIG_DISCOVERY" ///< Client discovery request
+#define DISCOVER_RESPONSE "TIG_RESPONSE" ///< Server discovery response
 #define ADDR_BUFF_SIZE 1024 ///< Server addresses buffer
-#define MSG_SIZE 32 ///< Discovery message buffer
+#define MSG_SIZE 16 ///< Discovery message buffer
 #define MCAST_IF "br-50ca92fdda97" ///< Multicast interface (server)
 
 /**

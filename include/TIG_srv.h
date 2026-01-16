@@ -13,7 +13,7 @@
 #define COMMIT_BUFF_SIZE 64 ///< Commit message buffer
 #define NAME_BUFF_SIZE 32 ///< File or directory name buffer
 #define TIME_BUFF_SIZE 64 ///< Time stamp buffer
-#define REPOS_PATH "/home/bartek/PS2025/projekt/srv/data" ///< Server data directory path (administrator configurable)
+#define DATA_PATH "/home/bartek/PS2025/projekt/srv/data" ///< Server data directory path (administrator configurable)
 
 /**
  * @brief Main server initialization function
@@ -32,5 +32,13 @@ void handle_client(int connfd, struct sockaddr_in6 *cliaddr);
  * @param signo Signal number
  */
 void sigchld_handler(int signo);
+
+/**
+ * @brief File lock/unlock functions for fork()
+ * @param fd file descriptor
+ */
+int lock_file_write(int fd);
+int lock_file_read(int fd);
+int unlock_file(int fd);
 
 #endif // TIG_SRV_H

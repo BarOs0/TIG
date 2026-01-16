@@ -6,12 +6,13 @@
  * @brief Client multicast discovery function for server detection
  */
 
-#define MCAST_ADDR "ff02::2026" ///< IPv6 multicast address
+#define MCAST_ADDR "ff05::2026" ///< IPv6 multicast address
 #define MCAST_PORT 2026 ///< UDP multicast port
 #define DISCOVER_MSG "TIG_DISCOVERY" ///< Client discovery request
-#define RESPONSE_MSG "TIG_RESPONSE" ///< Server discovery response
+#define DISCOVER_RESPONSE "TIG_RESPONSE" ///< Server discovery response
 #define TIMEOUT 3 ///< Seconds, socket timeout
 #define ADDR_BUFF_SIZE 1024 ///< Server addresses buffer
+#define MSG_SIZE 16 ///< Discovery message buffer
 #define MCAST_IF "eth1" ///< Multicast interface (client, user configurable)
 
 /**
